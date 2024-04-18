@@ -5,7 +5,11 @@ import useEnrichedLineItems from "@lib/hooks/use-enrich-line-items"
 import { Button } from "@medusajs/ui"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
+<<<<<<< HEAD
 import Trash from "@modules/common/icons/trash"
+=======
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 import Thumbnail from "@modules/products/components/thumbnail"
 import { formatAmount, useCart } from "medusa-react"
 import Link from "next/link"
@@ -24,6 +28,10 @@ const CartDropdown = () => {
           <Link
             className="hover:text-ui-fg-base"
             href="/cart"
+<<<<<<< HEAD
+=======
+            data-testid="nav-cart-link"
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
           >{`Cart (${totalItems})`}</Link>
         </Popover.Button>
         <Transition
@@ -64,8 +72,13 @@ const CartDropdown = () => {
                         <div className="flex flex-col justify-between flex-1">
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
+<<<<<<< HEAD
                               <div>
                                 <h3 className="text-base-regular overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
+=======
+                              <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
+                                <h3 className="text-base-regular overflow-hidden text-ellipsis">
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
                                   <Link
                                     href={`/products/${item.variant.product.handle}`}
                                   >
@@ -115,7 +128,15 @@ const CartDropdown = () => {
                     </span>
                   </div>
                   <Link href="/cart" passHref>
+<<<<<<< HEAD
                     <Button className="w-full" size="large">
+=======
+                    <Button
+                      className="w-full"
+                      size="large"
+                      data-testid="go-to-cart-button"
+                    >
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
                       Go to cart
                     </Button>
                   </Link>

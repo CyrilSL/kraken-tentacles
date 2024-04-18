@@ -1,7 +1,11 @@
 import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 import { Heading, Text } from "@medusajs/ui"
+<<<<<<< HEAD
 import Link from "next/link"
 import React from "react"
+=======
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 type ProductInfoProps = {
   product: PricedProduct

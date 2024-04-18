@@ -42,6 +42,10 @@ const Item: React.FC<AccordionItemProps> = ({
   ...props
 }) => {
   return (
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
     <AccordionPrimitive.Item
       {...props}
       className={clx(
@@ -50,12 +54,20 @@ const Item: React.FC<AccordionItemProps> = ({
         className
       )}
     >
+<<<<<<< HEAD
+=======
+     
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
       <AccordionPrimitive.Header className="px-1">
         <div className="flex flex-col">
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-4">
               <Text className="text-ui-fg-subtle text-sm">{title}</Text>
             </div>
+<<<<<<< HEAD
+=======
+           
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
             <AccordionPrimitive.Trigger>
               {customTrigger || <MorphingTrigger />}
             </AccordionPrimitive.Trigger>
@@ -67,6 +79,10 @@ const Item: React.FC<AccordionItemProps> = ({
           )}
         </div>
       </AccordionPrimitive.Header>
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
       <AccordionPrimitive.Content
         forceMount={forceMountContent}
         className={clx(

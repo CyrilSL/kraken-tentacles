@@ -17,7 +17,24 @@ import Link from "next/link"
 import UnderlineLink from "@modules/common/components/interactive-link"
 import { notFound } from "next/navigation"
 
+<<<<<<< HEAD
 type CategoryTemplateProps = {
+=======
+import { ProductCategoryWithChildren } from "types/global"
+import InteractiveLink from "@modules/common/components/interactive-link"
+import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
+import RefinementList from "@modules/store/components/refinement-list"
+import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import PaginatedProducts from "@modules/store/templates/paginated-products"
+import Link from 'next/link'
+
+export default function CategoryTemplate({
+  categories,
+  sortBy,
+  page,
+  countryCode,
+}: {
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
   categories: ProductCategoryWithChildren[]
 }
 
@@ -69,6 +86,7 @@ const CategoryTemplate: React.FC<CategoryTemplateProps> = ({ categories }) => {
   }, [inView, hasNextPage])
 
   return (
+<<<<<<< HEAD
     <div className="content-container py-6">
       <div className="flex flex-row mb-8 text-2xl-semi gap-4">
         {parents &&
@@ -88,6 +106,26 @@ const CategoryTemplate: React.FC<CategoryTemplateProps> = ({ categories }) => {
       {category.description && (
         <div className="mb-8 text-base-regular">
           <p>{category.description}</p>
+=======
+    <div className="flex flex-col small:flex-row small:items-start py-6 content-container" data-testid="category-container">
+      <RefinementList sortBy={sortBy || "created_at"} data-testid="sort-by-container" />
+      <div className="w-full">
+        <div className="flex flex-row mb-8 text-2xl-semi gap-4">
+          {parents &&
+            parents.map((parent) => (
+              <span key={parent.id} className="text-ui-fg-subtle">
+                <Link
+                  className="mr-4 hover:text-black"
+                  href={`/categories/${parent.handle}`}
+                  data-testid="sort-by-link"
+                >
+                  {parent.name}
+                </Link>
+                /
+              </span>
+            ))}
+          <h1 data-testid="category-page-title">{category.name}</h1>
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
         </div>
       )}
       {category.category_children && (

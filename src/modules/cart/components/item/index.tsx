@@ -7,7 +7,15 @@ import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
 import CartItemSelect from "@modules/cart/components/cart-item-select"
 import Trash from "@modules/common/icons/trash"
 import Thumbnail from "@modules/products/components/thumbnail"
+<<<<<<< HEAD
 import Link from "next/link"
+=======
+import { updateLineItem } from "@modules/cart/actions"
+import Spinner from "@modules/common/icons/spinner"
+import { useState } from "react"
+import ErrorMessage from "@modules/checkout/components/error-message"
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 type ItemProps = {
   item: Omit<LineItem, "beforeInsert">

@@ -1,6 +1,10 @@
 import Link from "next/link"
 import { ArrowUpRightMini } from "@medusajs/icons"
 import { Text } from "@medusajs/ui"
+<<<<<<< HEAD
+=======
+import Link from "next/link"
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 type InteractiveLinkProps = {
   href: string

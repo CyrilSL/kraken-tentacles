@@ -11,9 +11,10 @@ const transformProductPreview = (
 ): ProductPreviewType => {
   const variants = product.variants as unknown as CalculatedVariant[]
 
-  let cheapestVariant = undefined
+  let cheapestVariant: CalculatedVariant | undefined = undefined;
 
   if (variants?.length > 0) {
+    
     cheapestVariant = variants.reduce((acc, curr) => {
       if (acc.calculated_price > curr.calculated_price) {
         return curr

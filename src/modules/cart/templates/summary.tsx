@@ -3,7 +3,13 @@ import { Button, Heading } from "@medusajs/ui"
 import DiscountCode from "@modules/checkout/components/discount-code"
 import CartTotals from "@modules/common/components/cart-totals"
 import Divider from "@modules/common/components/divider"
+<<<<<<< HEAD
 import Link from "next/link"
+=======
+import { CartWithCheckoutStep } from "types/global"
+import DiscountCode from "@modules/checkout/components/discount-code"
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 type SummaryProps = {
   cart: Omit<Cart, "refundable_amount" | "refunded_total">
@@ -18,7 +24,11 @@ const Summary = ({ cart }: SummaryProps) => {
       <DiscountCode cart={cart} />
       <Divider />
       <CartTotals data={cart} />
+<<<<<<< HEAD
       <Link href="/checkout">
+=======
+      <Link href={"/checkout?step=" + cart.checkout_step} data-testid="checkout-button">
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
         <Button className="w-full h-10">Go to checkout</Button>
       </Link>
     </div>

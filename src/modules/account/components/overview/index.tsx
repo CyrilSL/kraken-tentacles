@@ -1,11 +1,15 @@
 import { Customer, Order } from "@medusajs/medusa"
 import { Container } from "@medusajs/ui"
 import ChevronDown from "@modules/common/icons/chevron-down"
+<<<<<<< HEAD
 import MapPin from "@modules/common/icons/map-pin"
 import Package from "@modules/common/icons/package"
 import User from "@modules/common/icons/user"
 import { formatAmount } from "medusa-react"
 import Link from "next/link"
+=======
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 type OverviewProps = {
   orders?: Order[]
@@ -111,8 +115,15 @@ const Overview = ({ orders, customer }: OverviewProps) => {
                 {orders ? (
                   orders.slice(0, 5).map((order) => {
                     return (
+<<<<<<< HEAD
                       <li key={order.id}>
                         <Link href={`/order/details/${order.id}`}>
+=======
+                      <li key={order.id} data-testid="order-wrapper" data-value={order.id}>
+                        <Link
+                          href={`/account/orders/details/${order.id}`}
+                        >
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
                           <Container className="bg-gray-50 flex justify-between items-center p-4">
                             <div className="grid grid-cols-3 grid-rows-2 text-small-regular gap-x-4 flex-1">
                               <span className="font-semibold">Date placed</span>

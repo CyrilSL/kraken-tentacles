@@ -1,8 +1,13 @@
 import Link from "next/link"
 import { Fragment } from "react"
+<<<<<<< HEAD
 import { Popover, Transition } from "@headlessui/react"
 import { XMark, ArrowRightMini } from "@medusajs/icons"
 import { Text, clx, useToggleState } from "@medusajs/ui"
+=======
+
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 import CountrySelect from "../country-select"
 
 const SideMenuItems = {

@@ -1,9 +1,15 @@
 "use client"
 
+<<<<<<< HEAD
 import { useMobileMenu } from "@lib/context/mobile-menu-context"
 import useToggleState from "@lib/hooks/use-toggle-state"
 import Hamburger from "@modules/common/components/hamburger"
 import CartDropdown from "@modules/layout/components/cart-dropdown"
+=======
+import { listRegions } from "@lib/data"
+import Link from 'next/link'
+import CartButton from "@modules/layout/components/cart-button"
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 import SideMenu from "@modules/layout/components/side-menu"
 import MobileMenu from "@modules/mobile-menu/templates"
 import DesktopSearchModal from "@modules/search/templates/desktop-search-modal"
@@ -51,15 +57,25 @@ const Nav = () => {
           </div>
 
           <div className="flex items-center h-full">
+<<<<<<< HEAD
             <Link href="/" className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase">
               {/* Display store name from API or "Loading..." or "Error" */}
               {isLoading ? 'Loading...' : error ? 'Error' : storeName || 'Medusa Store'}
+=======
+            <Link
+              href="/"
+              className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
+              data-testid="nav-store-link"
+            >
+              Medusa Store
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
             </Link>
           </div>
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               {process.env.FEATURE_SEARCH_ENABLED && (
+<<<<<<< HEAD
                 <DesktopSearchModal
                   state={searchModalState}
                   close={searchModalClose}
@@ -71,6 +87,38 @@ const Nav = () => {
               </Link>
             </div>
             <CartDropdown />
+=======
+                <Link
+                  className="hover:text-ui-fg-base"
+                  href="/search"
+                  scroll={false}
+                  data-testid="nav-search-link"
+                >
+                  Search
+                </Link>
+              )}
+              <Link
+                className="hover:text-ui-fg-base"
+                href="/account"
+                data-testid="nav-account-link"
+              >
+                Account
+              </Link>
+            </div>
+            <Suspense
+              fallback={
+                <Link
+                  className="hover:text-ui-fg-base flex gap-2"
+                  href="/cart"
+                  data-testid="nav-cart-link"
+                >
+                  Cart (0)
+                </Link>
+              }
+            >
+              <CartButton />
+            </Suspense>
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
           </div>
         </nav>
         <MobileMenu />

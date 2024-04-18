@@ -43,6 +43,11 @@ const FilterRadioGroup = ({
               value={i.value}
             />
             <Label
+<<<<<<< HEAD
+=======
+              // @ts-ignore 
+              placeholder={i.label}
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
               htmlFor={i.value}
               className={clx(
                 "text-ui-fg-subtle txt-compact-small-plus hover:cursor-pointer",

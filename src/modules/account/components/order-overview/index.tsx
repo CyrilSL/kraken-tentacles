@@ -5,6 +5,10 @@ import Spinner from "@modules/common/icons/spinner"
 import { useCustomerOrders } from "medusa-react"
 import Link from "next/link"
 import OrderCard from "../order-card"
+<<<<<<< HEAD
+=======
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 const OrderOverview = () => {
   const { orders, isLoading } = useCustomerOrders()
@@ -40,7 +44,11 @@ const OrderOverview = () => {
       </p>
       <div className="mt-4">
         <Link href="/" passHref>
+<<<<<<< HEAD
           <Button>Continue shopping</Button>
+=======
+          <Button data-testid="continue-shopping-button">Continue shopping</Button>
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
         </Link>
       </div>
     </div>

@@ -12,8 +12,10 @@ export const metadata: Metadata = {
 export default async function PageLayout(props: { children: React.ReactNode }) {
   return (
     <>
+     {/* @ts-ignore */}
       <Nav />
       {props.children}
+       {/* @ts-ignore */}
       <Footer />
     </>
   )

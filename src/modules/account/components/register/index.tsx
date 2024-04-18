@@ -2,11 +2,19 @@ import { medusaClient } from "@lib/config"
 import { LOGIN_VIEW, useAccount } from "@lib/context/account-context"
 import { Button } from "@medusajs/ui"
 import Input from "@modules/common/components/input"
+<<<<<<< HEAD
 import { Spinner } from "@medusajs/icons"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
+=======
+import { LOGIN_VIEW } from "@modules/account/templates/login-template"
+import { signUp } from "@modules/account/actions"
+import ErrorMessage from "@modules/checkout/components/error-message"
+import { SubmitButton } from "@modules/checkout/components/submit-button"
+import Link from 'next/link'
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
 
 interface RegisterCredentials extends FieldValues {
   first_name: string
@@ -101,11 +109,25 @@ const Register = () => {
         )}
         <span className="text-center text-gray-700 text-small-regular mt-6">
           By creating an account, you agree to Medusa Store&apos;s{" "}
+<<<<<<< HEAD
           <Link href="/content/privacy-policy" className="underline">
             Privacy Policy
           </Link>{" "}
           and{" "}
           <Link href="/content/terms-of-use" className="underline">
+=======
+          <Link
+            href="/content/privacy-policy"
+            className="underline"
+          >
+            Privacy Policy
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="/content/terms-of-use"
+            className="underline"
+          >
+>>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
             Terms of Use
           </Link>
           .
