@@ -10,15 +10,7 @@ import { formatAmount } from "@lib/util/prices"
 import DeleteButton from "@modules/common/components/delete-button"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Trash from "@modules/common/icons/trash"
-=======
 import Link from 'next/link'
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-import Link from 'next/link'
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import Thumbnail from "@modules/products/components/thumbnail"
 
 const CartDropdown = ({
@@ -89,14 +81,7 @@ const CartDropdown = ({
           <Link
             className="hover:text-ui-fg-base"
             href="/cart"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
             data-testid="nav-cart-link"
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-            data-testid="nav-cart-link"
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
           >{`Cart (${totalItems})`}</Link>
         </Popover.Button>
         <Transition
@@ -139,18 +124,8 @@ const CartDropdown = ({
                         <div className="flex flex-col justify-between flex-1">
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              <div>
-                                <h3 className="text-base-regular overflow-ellipsis overflow-hidden whitespace-nowrap mr-4 w-[130px]">
-=======
                               <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
                                 <h3 className="text-base-regular overflow-hidden text-ellipsis">
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-                              <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
-                                <h3 className="text-base-regular overflow-hidden text-ellipsis">
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
                                   <Link
                                     href={`/products/${item.variant.product.handle}`}
                                     data-testid="product-link"
@@ -209,21 +184,11 @@ const CartDropdown = ({
                     </span>
                   </div>
                   <Link href="/cart" passHref>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    <Button className="w-full" size="large">
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
                     <Button
                       className="w-full"
                       size="large"
                       data-testid="go-to-cart-button"
                     >
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
                       Go to cart
                     </Button>
                   </Link>

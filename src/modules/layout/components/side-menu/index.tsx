@@ -5,19 +5,8 @@ import { ArrowRightMini, XMark } from "@medusajs/icons"
 import { Region } from "@medusajs/medusa"
 import { Text, clx, useToggleState } from "@medusajs/ui"
 import { Fragment } from "react"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { Popover, Transition } from "@headlessui/react"
-import { XMark, ArrowRightMini } from "@medusajs/icons"
-import { Text, clx, useToggleState } from "@medusajs/ui"
-=======
 
 import Link from 'next/link'
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-
-import Link from 'next/link'
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import CountrySelect from "../country-select"
 
 const SideMenuItems = {

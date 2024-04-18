@@ -3,18 +3,8 @@ import Link from "next/link"
 
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Link from "next/link"
-import { useEffect, useState } from "react"
-=======
 import PaginatedProducts from "@modules/store/templates/paginated-products"
 
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-import PaginatedProducts from "@modules/store/templates/paginated-products"
-
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type SearchResultsTemplateProps = {
   query: string

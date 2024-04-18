@@ -4,25 +4,7 @@ import { Order } from "@medusajs/medusa"
 import { Button } from "@medusajs/ui"
 
 import OrderCard from "../order-card"
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 import Link from 'next/link'
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-
-const OrderOverview = () => {
-  const { orders, isLoading } = useCustomerOrders()
-
-  if (isLoading) {
-    return (
-      <div className="text-gray-900 w-full flex justify-center pt-12">
-        <Spinner size={36} />
-      </div>
-    )
-  }
-=======
-import Link from 'next/link'
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 const OrderOverview = ({ orders }: { orders: Order[] }) => {
   if (orders?.length) {
@@ -48,15 +30,7 @@ const OrderOverview = ({ orders }: { orders: Order[] }) => {
       </p>
       <div className="mt-4">
         <Link href="/" passHref>
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <Button>Continue shopping</Button>
-=======
           <Button data-testid="continue-shopping-button">Continue shopping</Button>
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-          <Button data-testid="continue-shopping-button">Continue shopping</Button>
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
         </Link>
       </div>
     </div>

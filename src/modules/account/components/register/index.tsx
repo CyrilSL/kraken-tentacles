@@ -3,25 +3,11 @@
 import { useFormState } from "react-dom"
 
 import Input from "@modules/common/components/input"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { Spinner } from "@medusajs/icons"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { FieldValues, useForm } from "react-hook-form"
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import { LOGIN_VIEW } from "@modules/account/templates/login-template"
 import { signUp } from "@modules/account/actions"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
 import Link from 'next/link'
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type Props = {
   setCurrentView: (view: LOGIN_VIEW) => void
@@ -76,16 +62,6 @@ const Register = ({ setCurrentView }: Props) => {
         <ErrorMessage error={message} data-testid="register-error" />
         <span className="text-center text-ui-fg-base text-small-regular mt-6">
           By creating an account, you agree to Medusa Store&apos;s{" "}
-<<<<<<< HEAD
-<<<<<<< HEAD
-          <Link href="/content/privacy-policy" className="underline">
-            Privacy Policy
-          </Link>{" "}
-          and{" "}
-          <Link href="/content/terms-of-use" className="underline">
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
           <Link
             href="/content/privacy-policy"
             className="underline"
@@ -97,10 +73,6 @@ const Register = ({ setCurrentView }: Props) => {
             href="/content/terms-of-use"
             className="underline"
           >
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
             Terms of Use
           </Link>
           .

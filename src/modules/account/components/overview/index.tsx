@@ -3,19 +3,7 @@ import { Container } from "@medusajs/ui"
 import { formatAmount } from "@lib/util/prices"
 
 import ChevronDown from "@modules/common/icons/chevron-down"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import MapPin from "@modules/common/icons/map-pin"
-import Package from "@modules/common/icons/package"
-import User from "@modules/common/icons/user"
-import { formatAmount } from "medusa-react"
-import Link from "next/link"
-=======
 import Link from 'next/link'
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-import Link from 'next/link'
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type OverviewProps = {
   customer: Omit<Customer, "password_hash"> | null
@@ -69,21 +57,10 @@ const Overview = ({ customer, orders }: OverviewProps) => {
                 {orders && orders.length > 0 ? (
                   orders.slice(0, 5).map((order) => {
                     return (
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      <li key={order.id}>
-                        <Link href={`/order/details/${order.id}`}>
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
                       <li key={order.id} data-testid="order-wrapper" data-value={order.id}>
                         <Link
                           href={`/account/orders/details/${order.id}`}
                         >
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
                           <Container className="bg-gray-50 flex justify-between items-center p-4">
                             <div className="grid grid-cols-3 grid-rows-2 text-small-regular gap-x-4 flex-1">
                               <span className="font-semibold">Date placed</span>

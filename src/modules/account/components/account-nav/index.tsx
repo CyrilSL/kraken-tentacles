@@ -6,23 +6,11 @@ import { ArrowRightOnRectangle } from "@medusajs/icons"
 import { useParams, usePathname } from "next/navigation"
 
 import ChevronDown from "@modules/common/icons/chevron-down"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import clsx from "clsx"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import { signOut } from "@modules/account/actions"
 import User from "@modules/common/icons/user"
 import MapPin from "@modules/common/icons/map-pin"
 import Package from "@modules/common/icons/package"
 import Link from 'next/link'
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 const AccountNav = ({
   customer,
@@ -38,18 +26,8 @@ const AccountNav = ({
 
   return (
     <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <div className="small:hidden">
-        {route !== "/account" && (
-=======
       <div className="small:hidden" data-testid="mobile-account-nav">
         {route !== `/${countryCode}/account` ? (
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-      <div className="small:hidden" data-testid="mobile-account-nav">
-        {route !== `/${countryCode}/account` ? (
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
           <Link
             href="/account"
             className="flex items-center gap-x-2 text-small-regular py-2"
@@ -60,11 +38,6 @@ const AccountNav = ({
               <span>Account</span>
             </>
           </Link>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
         ) : (
           <>
             <div className="text-xl-semi mb-4 px-8">
@@ -132,10 +105,6 @@ const AccountNav = ({
               </ul>
             </div>
           </>
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
         )}
       </div>
       <div className="hidden small:block" data-testid="account-nav">
@@ -217,15 +186,7 @@ const AccountNavLink = ({ href, route, children, 'data-testid': dataTestId }: Ac
       })}
       data-testid={dataTestId}
     >
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <>{children}</>
-=======
       {children}
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-      {children}
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     </Link>
   )
 }

@@ -3,19 +3,8 @@ import { Button } from "@medusajs/ui"
 import { useMemo } from "react"
 
 import Thumbnail from "@modules/products/components/thumbnail"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import { formatAmount } from "medusa-react"
-import Link from "next/link"
-import { useMemo } from "react"
-=======
 import Link from 'next/link'
 import { formatAmount } from "@lib/util/prices"
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-import Link from 'next/link'
-import { formatAmount } from "@lib/util/prices"
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type OrderCardProps = {
   order: Omit<Order, "beforeInsert">
@@ -73,18 +62,8 @@ const OrderCard = ({ order }: OrderCardProps) => {
         )}
       </div>
       <div className="flex justify-end">
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <Link href={`/order/details/${order.id}`}>
-          <Button variant="secondary">See details</Button>
-=======
         <Link href={`/account/orders/details/${order.id}`}>
           <Button data-testid="order-details-link" variant="secondary">See details</Button>
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-        <Link href={`/account/orders/details/${order.id}`}>
-          <Button data-testid="order-details-link" variant="secondary">See details</Button>
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
         </Link>
       </div>
     </div>

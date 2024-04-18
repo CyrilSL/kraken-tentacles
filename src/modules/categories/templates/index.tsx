@@ -1,12 +1,6 @@
 import { notFound } from "next/navigation"
 import { Suspense } from "react"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-type CategoryTemplateProps = {
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import { ProductCategoryWithChildren } from "types/global"
 import InteractiveLink from "@modules/common/components/interactive-link"
 import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
@@ -21,10 +15,6 @@ export default function CategoryTemplate({
   page,
   countryCode,
 }: {
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
   categories: ProductCategoryWithChildren[]
   sortBy?: SortOptions
   page?: string
@@ -38,30 +28,6 @@ export default function CategoryTemplate({
   if (!category || !countryCode) notFound()
 
   return (
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <div className="content-container py-6">
-      <div className="flex flex-row mb-8 text-2xl-semi gap-4">
-        {parents &&
-          parents.map((parent) => (
-            <span key={parent.id} className="text-gray-500">
-              <Link
-                className="mr-4 hover:text-black"
-                href={`/${parent.handle}`}
-              >
-                {parent.name}
-              </Link>
-              /
-            </span>
-          ))}
-        <h1>{category.name}</h1>
-      </div>
-      {category.description && (
-        <div className="mb-8 text-base-regular">
-          <p>{category.description}</p>
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     <div className="flex flex-col small:flex-row small:items-start py-6 content-container" data-testid="category-container">
       <RefinementList sortBy={sortBy || "created_at"} data-testid="sort-by-container" />
       <div className="w-full">
@@ -80,10 +46,6 @@ export default function CategoryTemplate({
               </span>
             ))}
           <h1 data-testid="category-page-title">{category.name}</h1>
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
         </div>
         {category.description && (
           <div className="mb-8 text-base-regular">

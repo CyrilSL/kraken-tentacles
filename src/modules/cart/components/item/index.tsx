@@ -9,21 +9,11 @@ import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
 import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
 import Thumbnail from "@modules/products/components/thumbnail"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Link from "next/link"
-=======
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import { updateLineItem } from "@modules/cart/actions"
 import Spinner from "@modules/common/icons/spinner"
 import { useState } from "react"
 import ErrorMessage from "@modules/checkout/components/error-message"
 import Link from 'next/link'
-<<<<<<< HEAD
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type ItemProps = {
   item: Omit<LineItem, "beforeInsert">

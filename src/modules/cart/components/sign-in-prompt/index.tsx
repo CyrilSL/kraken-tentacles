@@ -1,13 +1,5 @@
 import { Button, Heading, Text } from "@medusajs/ui"
-<<<<<<< HEAD
-<<<<<<< HEAD
-import Link from "next/link"
-=======
 import Link from 'next/link'
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-import Link from 'next/link'
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 const SignInPrompt = () => {
   return (
@@ -21,18 +13,8 @@ const SignInPrompt = () => {
         </Text>
       </div>
       <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <Link href="/account/login">
-          <Button variant="secondary" className="h-10">
-=======
         <Link href="/account">
           <Button variant="secondary" className="h-10" data-testid="sign-in-button">
->>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
-=======
-        <Link href="/account">
-          <Button variant="secondary" className="h-10" data-testid="sign-in-button">
->>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
             Sign in
           </Button>
         </Link>
