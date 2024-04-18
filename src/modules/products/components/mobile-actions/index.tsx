@@ -1,28 +1,56 @@
 import { Dialog, Transition } from "@headlessui/react"
-import { useProductActions } from "@lib/context/product-context"
-import useProductPrice from "@lib/hooks/use-product-price"
+import {
+  PricedProduct,
+  PricedVariant,
+} from "@medusajs/medusa/dist/types/pricing"
+import { Button, clx } from "@medusajs/ui"
+import React, { Fragment, useMemo } from "react"
+
 import useToggleState from "@lib/hooks/use-toggle-state"
-import { Button } from "@medusajs/ui"
 import ChevronDown from "@modules/common/icons/chevron-down"
 import X from "@modules/common/icons/x"
-import clsx from "clsx"
-import React, { Fragment, useMemo } from "react"
+
+import { getProductPrice } from "@lib/util/get-product-price"
+import { Region } from "@medusajs/medusa"
 import OptionSelect from "../option-select"
-import { PricedProduct } from "@medusajs/medusa/dist/types/pricing"
 
 type MobileActionsProps = {
   product: PricedProduct
+  variant?: PricedVariant
+  region: Region
+  options: Record<string, string>
+  updateOptions: (update: Record<string, string>) => void
+  inStock?: boolean
+  handleAddToCart: () => void
+  isAdding?: boolean
   show: boolean
+  optionsDisabled: boolean
 }
 
-const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
-  const { variant, addToCart, options, inStock, updateOptions } =
-    useProductActions()
+const MobileActions: React.FC<MobileActionsProps> = ({
+  product,
+  variant,
+  region,
+  options,
+  updateOptions,
+  inStock,
+  handleAddToCart,
+  isAdding,
+  show,
+  optionsDisabled,
+}) => {
   const { state, open, close } = useToggleState()
 
-  const price = useProductPrice({ id: product.id!, variantId: variant?.id })
+  const price = getProductPrice({
+    product: product,
+    variantId: variant?.id,
+    region,
+  })
 
   const selectedPrice = useMemo(() => {
+    if (!price) {
+      return null
+    }
     const { variantPrice, cheapestPrice } = price
 
     return variantPrice || cheapestPrice || null
@@ -31,7 +59,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
   return (
     <>
       <div
-        className={clsx("lg:hidden sticky inset-x-0 bottom-0", {
+        className={clx("lg:hidden inset-x-0 bottom-0 fixed", {
           "pointer-events-none": !show,
         })}
       >
@@ -45,12 +73,15 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="bg-white flex flex-col gap-y-3 justify-center items-center text-large-regular p-4 h-full w-full border-t border-gray-200">
+          <div
+            className="bg-white flex flex-col gap-y-3 justify-center items-center text-large-regular p-4 h-full w-full border-t border-gray-200"
+            data-testid="mobile-actions"
+          >
             <div className="flex items-center gap-x-2">
-              <span>{product.title}</span>
+              <span data-testid="mobile-title">{product.title}</span>
               <span>—</span>
               {selectedPrice ? (
-                <div className="flex items-end gap-x-2 text-gray-700">
+                <div className="flex items-end gap-x-2 text-ui-fg-base">
                   {selectedPrice.price_type === "sale" && (
                     <p>
                       <span className="line-through text-small-regular">
@@ -59,7 +90,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                     </p>
                   )}
                   <span
-                    className={clsx({
+                    className={clx({
                       "text-ui-fg-interactive":
                         selectedPrice.price_type === "sale",
                     })}
@@ -72,7 +103,12 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
               )}
             </div>
             <div className="grid grid-cols-2 w-full gap-x-4">
-              <Button onClick={open} variant="secondary" className="w-full">
+              <Button
+                onClick={open}
+                variant="secondary"
+                className="w-full"
+                data-testid="mobile-actions-button"
+              >
                 <div className="flex items-center justify-between w-full">
                   <span>
                     {variant
@@ -82,8 +118,18 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                   <ChevronDown />
                 </div>
               </Button>
-              <Button onClick={addToCart} className="w-full">
-                {!inStock ? "Out of stock" : "Add to cart"}
+              <Button
+                onClick={handleAddToCart}
+                disabled={!inStock || !variant}
+                className="w-full"
+                isLoading={isAdding}
+                data-testid="mobile-cart-button"
+              >
+                {!variant
+                  ? "Select variant"
+                  : !inStock
+                  ? "Out of stock"
+                  : "Add to cart"}
               </Button>
             </div>
           </div>
@@ -114,11 +160,15 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
               >
-                <Dialog.Panel className="w-full h-full transform overflow-hidden text-left flex flex-col gap-y-3">
+                <Dialog.Panel
+                  className="w-full h-full transform overflow-hidden text-left flex flex-col gap-y-3"
+                  data-testid="mobile-actions-modal"
+                >
                   <div className="w-full flex justify-end pr-6">
                     <button
                       onClick={close}
-                      className="bg-white w-12 h-12 rounded-full text-gray-900 flex justify-center items-center"
+                      className="bg-white w-12 h-12 rounded-full text-ui-fg-base flex justify-center items-center"
+                      data-testid="close-modal-button"
                     >
                       <X />
                     </button>
@@ -134,6 +184,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({ product, show }) => {
                                 current={options[option.id]}
                                 updateOption={updateOptions}
                                 title={option.title}
+                                disabled={optionsDisabled}
                               />
                             </div>
                           )

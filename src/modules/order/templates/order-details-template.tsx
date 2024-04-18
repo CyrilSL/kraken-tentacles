@@ -1,16 +1,23 @@
 "use client"
 
 import { Order } from "@medusajs/medusa"
+import { XMark } from "@medusajs/icons"
+import React from "react"
+
 import Help from "@modules/order/components/help"
 import Items from "@modules/order/components/items"
 import OrderDetails from "@modules/order/components/order-details"
 import OrderSummary from "@modules/order/components/order-summary"
 import ShippingDetails from "@modules/order/components/shipping-details"
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from "react"
 =======
 import Link from 'next/link'
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+import Link from 'next/link'
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type OrderDetailsTemplateProps = {
   order: Order
@@ -20,6 +27,7 @@ const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
   order,
 }) => {
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     <div className=" py-6 min-h-[calc(100vh-64px)]">
       <div className="content-container flex justify-center">
@@ -36,6 +44,8 @@ const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
           <Help />
         </div>
 =======
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     <div className="flex flex-col justify-center gap-y-4">
       <div className="flex gap-2 justify-between items-center">
         <h1 className="text-2xl-semi">Order details</h1>
@@ -53,7 +63,10 @@ const OrderDetailsTemplate: React.FC<OrderDetailsTemplateProps> = ({
         <ShippingDetails order={order} />
         <OrderSummary order={order} />
         <Help />
+<<<<<<< HEAD
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
       </div>
     </div>
   )

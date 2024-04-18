@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import FooterNav from "@modules/layout/components/footer-nav"
 =======
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import { Text, clx } from "@medusajs/ui"
 
 import { getCategoriesList, getCollectionsList } from "@lib/data"
@@ -11,14 +14,19 @@ import MedusaCTA from "@modules/layout/components/medusa-cta"
 export default async function Footer() {
   const { collections } = await getCollectionsList(0, 6)
   const { product_categories } = await getCategoriesList(0, 6)
+<<<<<<< HEAD
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
-const Footer = () => {
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     <footer>
       <FooterNav />
 =======
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     <footer className="border-t border-ui-border-base w-full">
       <div className="content-container flex flex-col w-full">
         <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
@@ -156,9 +164,10 @@ const Footer = () => {
           <MedusaCTA />
         </div>
       </div>
+<<<<<<< HEAD
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     </footer>
   )
 }
-
-export default Footer

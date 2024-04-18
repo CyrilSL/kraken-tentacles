@@ -1,9 +1,6 @@
-import clsx from "clsx"
-import Link from "next/link"
-import { ProductPreviewType } from "types/global"
-import Thumbnail from "../thumbnail"
 import { Text } from "@medusajs/ui"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 const ProductPreview = ({
   title,
@@ -44,6 +41,8 @@ const ProductPreview = ({
 
 export default ProductPreview
 =======
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 import { ProductPreviewType } from "types/global"
 
 import { retrievePricedProductById } from "@lib/data"
@@ -97,4 +96,7 @@ export default async function ProductPreview({
     </Link>
   )
 }
+<<<<<<< HEAD
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)

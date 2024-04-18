@@ -1,11 +1,16 @@
 import { ProductVariant } from "@medusajs/medusa"
-import { Container, Heading, Text } from "@medusajs/ui"
+import { Container, Text } from "@medusajs/ui"
+
 import Thumbnail from "@modules/products/components/thumbnail"
+<<<<<<< HEAD
 <<<<<<< HEAD
 import Link from "next/link"
 =======
 import Link from 'next/link'
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+import Link from 'next/link'
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 export type ProductHit = {
   id: string
@@ -18,12 +23,13 @@ export type ProductHit = {
   collection_id: string | null
 }
 
-export type HitProps = {
+type HitProps = {
   hit: ProductHit
 }
 
 const Hit = ({ hit }: HitProps) => {
   return (
+<<<<<<< HEAD
 <<<<<<< HEAD
     <Container
       key={hit.id}
@@ -45,6 +51,8 @@ const Hit = ({ hit }: HitProps) => {
       </div>
     </Container>
 =======
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     <Link href={`/products/${hit.handle}`}>
       <Container
         key={hit.id}
@@ -62,7 +70,10 @@ const Hit = ({ hit }: HitProps) => {
         </div>
       </Container>
     </Link>
+<<<<<<< HEAD
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
   )
 }
 

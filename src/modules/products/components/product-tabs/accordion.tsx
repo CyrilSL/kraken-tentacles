@@ -1,6 +1,6 @@
+import { Text, clx } from "@medusajs/ui"
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 import React from "react"
-import { Heading, Text, clx } from "@medusajs/ui"
 
 type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
   title: string
@@ -14,14 +14,16 @@ type AccordionItemProps = AccordionPrimitive.AccordionItemProps & {
   complete?: boolean
   active?: boolean
   triggerable?: boolean
+  children: React.ReactNode
 }
 
-const Accordion: React.FC<
+type AccordionProps =
   | (AccordionPrimitive.AccordionSingleProps &
       React.RefAttributes<HTMLDivElement>)
   | (AccordionPrimitive.AccordionMultipleProps &
       React.RefAttributes<HTMLDivElement>)
-> & {
+
+const Accordion: React.FC<AccordionProps> & {
   Item: React.FC<AccordionItemProps>
 } = ({ children, ...props }) => {
   return (
@@ -43,9 +45,13 @@ const Item: React.FC<AccordionItemProps> = ({
 }) => {
   return (
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
     <AccordionPrimitive.Item
       {...props}
       className={clx(
@@ -55,9 +61,13 @@ const Item: React.FC<AccordionItemProps> = ({
       )}
     >
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
      
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+     
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
       <AccordionPrimitive.Header className="px-1">
         <div className="flex flex-col">
           <div className="flex w-full items-center justify-between">
@@ -65,9 +75,13 @@ const Item: React.FC<AccordionItemProps> = ({
               <Text className="text-ui-fg-subtle text-sm">{title}</Text>
             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
            
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+           
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
             <AccordionPrimitive.Trigger>
               {customTrigger || <MorphingTrigger />}
             </AccordionPrimitive.Trigger>
@@ -80,9 +94,13 @@ const Item: React.FC<AccordionItemProps> = ({
         </div>
       </AccordionPrimitive.Header>
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+    
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
       <AccordionPrimitive.Content
         forceMount={forceMountContent}
         className={clx(

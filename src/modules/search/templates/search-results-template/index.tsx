@@ -1,10 +1,9 @@
-"use client"
-
-import { StoreGetProductsParams } from "@medusajs/medusa"
 import { Heading, Text } from "@medusajs/ui"
-import InfiniteProducts from "@modules/products/components/infinite-products"
+import Link from "next/link"
+
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+<<<<<<< HEAD
 <<<<<<< HEAD
 import Link from "next/link"
 import { useEffect, useState } from "react"
@@ -12,29 +11,35 @@ import { useEffect, useState } from "react"
 import PaginatedProducts from "@modules/store/templates/paginated-products"
 
 >>>>>>> 6e932a4 (uses Link now, and build without error ts-ignored's a lot)
+=======
+import PaginatedProducts from "@modules/store/templates/paginated-products"
+
+>>>>>>> 3aa907a (working branch, builds without error, multi-tenancy)
 
 type SearchResultsTemplateProps = {
   query: string
-  hits: Record<string, any>[]
+  ids: string[]
+  sortBy?: SortOptions
+  page?: string
+  countryCode: string
 }
 
-const SearchResultsTemplate = ({ query, hits }: SearchResultsTemplateProps) => {
-  const [params, setParams] = useState<StoreGetProductsParams>({})
-  const [sortBy, setSortBy] = useState<SortOptions>("created_at")
-
-  useEffect(() => {
-    setParams({
-      id: hits.map((h) => (h.hasOwnProperty("objectID") ? h.objectID : h.id)),
-    })
-  }, [hits])
+const SearchResultsTemplate = ({
+  query,
+  ids,
+  sortBy,
+  page,
+  countryCode,
+}: SearchResultsTemplateProps) => {
+  const pageNumber = page ? parseInt(page) : 1
 
   return (
-    <div>
+    <>
       <div className="flex justify-between border-b w-full py-6 px-8 small:px-14 items-center">
         <div className="flex flex-col items-start">
           <Text className="text-ui-fg-muted">Search Results for:</Text>
           <Heading>
-            {query} ({hits.length})
+            {decodeURI(query)} ({ids.length})
           </Heading>
         </div>
         <Link
@@ -44,23 +49,24 @@ const SearchResultsTemplate = ({ query, hits }: SearchResultsTemplateProps) => {
           Clear
         </Link>
       </div>
-      <div className="flex flex-col small:flex-row small:items-start py-6">
-        {hits.length > 0 ? (
+      <div className="flex flex-col small:flex-row small:items-start p-6">
+        {ids.length > 0 ? (
           <>
-            <RefinementList
-              refinementList={params}
-              setRefinementList={setParams}
-              sortBy={sortBy}
-              setSortBy={setSortBy}
-              search
-            />
-            <InfiniteProducts params={params} sortBy={sortBy} />
+            <RefinementList sortBy={sortBy || "created_at"} search />
+            <div className="content-container">
+              <PaginatedProducts
+                productsIds={ids}
+                sortBy={sortBy}
+                page={pageNumber}
+                countryCode={countryCode}
+              />
+            </div>
           </>
         ) : (
           <Text className="ml-8 small:ml-14 mt-3">No results.</Text>
         )}
       </div>
-    </div>
+    </>
   )
 }
 
