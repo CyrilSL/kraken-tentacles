@@ -1,8 +1,7 @@
-import { formatAmount } from "@lib/util/prices"
-import { LineItem, Region } from "@medusajs/medusa"
-import { clx } from "@medusajs/ui"
-
 import { getPercentageDiff } from "@lib/util/get-precentage-diff"
+import { LineItem, Region } from "@medusajs/medusa"
+import clsx from "clsx"
+import { formatAmount } from "medusa-react"
 import { CalculatedVariant } from "types/medusa"
 
 type LineItemUnitPriceProps = {
@@ -28,7 +27,7 @@ const LineItemUnitPrice = ({
             {style === "default" && (
               <span className="text-ui-fg-muted">Original: </span>
             )}
-            <span className="line-through" data-testid="product-unit-original-price">
+            <span className="line-through">
               {formatAmount({
                 amount: originalPrice,
                 region: region,
@@ -44,10 +43,9 @@ const LineItemUnitPrice = ({
         </>
       )}
       <span
-        className={clx("text-base-regular", {
+        className={clsx("text-base-regular", {
           "text-ui-fg-interactive": hasReducedPrice,
         })}
-        data-testid="product-unit-price"
       >
         {formatAmount({
           amount: reducedPrice || item.unit_price || 0,

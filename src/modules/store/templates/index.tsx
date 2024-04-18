@@ -1,37 +1,31 @@
-import { Suspense } from "react"
+"use client"
 
-import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
+import { StoreGetProductsParams } from "@medusajs/medusa"
+import InfiniteProducts from "@modules/products/components/infinite-products"
 import RefinementList from "@modules/store/components/refinement-list"
-import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
+import { useState } from "react"
+import { SortOptions } from "../components/refinement-list/sort-products"
+import { getValidSubdomain } from "@lib/subdomain"
+import DomainProducts from "@modules/products/components/domain-products"
 
-import PaginatedProducts from "./paginated-products"
-
-const StoreTemplate = ({
-  sortBy,
-  page,
-  countryCode,
-}: {
-  sortBy?: SortOptions
-  page?: string
-  countryCode: string
-}) => {
-  const pageNumber = page ? parseInt(page) : 1
+const StoreTemplate = () => {
+  const [params, setParams] = useState<StoreGetProductsParams>({})
+  const [sortBy, setSortBy] = useState<SortOptions>("created_at")
+  const subdomain = getValidSubdomain() || 'Cyril' // Default to 'Cyril' if subdomain is null
 
   return (
-    <div className="flex flex-col small:flex-row small:items-start py-6 content-container" data-testid="category-container">
-      <RefinementList sortBy={sortBy || "created_at"} />
-      <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">All products</h1>
-        </div>
-        <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sortBy || "created_at"}
-            page={pageNumber}
-            countryCode={countryCode}
-          />
-        </Suspense>
-      </div>
+    <div className="flex flex-col small:flex-row small:items-start py-6">
+      <RefinementList
+        refinementList={params}
+        setRefinementList={setParams}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
+      <h1>Domain Products</h1>
+
+      <DomainProducts params={params} sortBy={sortBy} subdomain={subdomain}/>
+      <h1>Infinite Products</h1>
+      <InfiniteProducts params={params} sortBy={sortBy} />
     </div>
   )
 }

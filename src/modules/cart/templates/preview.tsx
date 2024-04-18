@@ -1,8 +1,5 @@
-"use client"
-
 import { LineItem, Region } from "@medusajs/medusa"
 import { Table, clx } from "@medusajs/ui"
-
 import Item from "@modules/cart/components/item"
 import SkeletonLineItem from "@modules/skeletons/components/skeleton-line-item"
 
@@ -22,7 +19,7 @@ const ItemsPreviewTemplate = ({ items, region }: ItemsTemplateProps) => {
       })}
     >
       <Table>
-        <Table.Body data-testid="items-table">
+        <Table.Body>
           {items && region
             ? items
                 .sort((a, b) => {

@@ -1,9 +1,9 @@
 import { Image as MedusaImage } from "@medusajs/medusa"
-import { Container, clx } from "@medusajs/ui"
+import { Container } from "@medusajs/ui"
+import PlaceholderImage from "@modules/common/icons/placeholder-image"
+import clsx from "clsx"
 import Image from "next/image"
 import React from "react"
-
-import PlaceholderImage from "@modules/common/icons/placeholder-image"
 
 type ThumbnailProps = {
   thumbnail?: string | null
@@ -11,7 +11,6 @@ type ThumbnailProps = {
   size?: "small" | "medium" | "large" | "full" | "square"
   isFeatured?: boolean
   className?: string
-  'data-testid'?: string
 }
 
 const Thumbnail: React.FC<ThumbnailProps> = ({
@@ -20,13 +19,12 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
   size = "small",
   isFeatured,
   className,
-  'data-testid': dataTestid
 }) => {
   const initialImage = thumbnail || images?.[0]?.url
 
   return (
     <Container
-      className={clx(
+      className={clsx(
         "relative w-full overflow-hidden p-4 bg-ui-bg-subtle shadow-elevation-card-rest rounded-large group-hover:shadow-elevation-card-hover transition-shadow ease-in-out duration-150",
         className,
         {
@@ -39,7 +37,6 @@ const Thumbnail: React.FC<ThumbnailProps> = ({
           "w-full": size === "full",
         }
       )}
-      data-testid={dataTestid}
     >
       <ImageOrPlaceholder image={initialImage} size={size} />
     </Container>
