@@ -8,6 +8,7 @@ const Layout: React.FC<{
 }> = ({ children }) => {
   return (
     <div>
+      {/* @ts-ignore */}
       <Nav />
       <main className="relative">{children}</main>
       <Footer />
