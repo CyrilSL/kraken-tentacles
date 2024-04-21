@@ -68,7 +68,12 @@ export default async function Home({
 
   return (
     <>
+    <h1 className="text-center">
+      Mini - Store
+      </h1>
       <Hero />
+     
+      
       <div className="py-12">
         <ul className="flex flex-col gap-x-6">
           <FeaturedProducts collections={collections} region={region} />
