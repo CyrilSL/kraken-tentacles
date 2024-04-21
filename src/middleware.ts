@@ -12,6 +12,7 @@ export async function middleware(req: NextRequest) {
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return;
 
   const hostname = req.headers.get('host');
+  console.log("Hostname : ",hostname)
   console.log("env: ",process.env.NEXT_PUBLIC_BASE_URL)
   const subdomain = getValidSubdomain(hostname);
   if (subdomain) {
@@ -20,7 +21,13 @@ export async function middleware(req: NextRequest) {
     url.pathname = `/${subdomain}${url.pathname}`;
   }
 
-
+   // Check if the request is made to the root domain (localhost:8000 or your production domain)
+   if (hostname === 'localhost:8000' || hostname === process.env.NEXT_PUBLIC_BASE_URL || hostname === "twigstudio.in" ) {
+    // Rewrite the root application to `/home` folder
+    const path = `${url.pathname === '/' ? '' : url.pathname}`;
+    url.pathname = `/home${path}`;
+    return NextResponse.rewrite(url);
+  }
 
   return NextResponse.rewrite(url);
 }
