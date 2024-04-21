@@ -68,9 +68,6 @@ export default async function Home({
 
   return (
     <>
-    <h1 className="text-center">
-      Mini - Store
-      </h1>
       <Hero />
      
       
