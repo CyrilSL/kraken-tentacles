@@ -12,7 +12,9 @@ export async function middleware(req: NextRequest) {
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return;
 
   const host = req.headers.get('host');
+
   const subdomain = getValidSubdomain(host);
+  console.log("GVSD :",subdomain)
   if (subdomain) {
     // Subdomain available, rewriting
     console.log(`>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`);
@@ -20,12 +22,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-     // Check if the request is made to the root domain (localhost:8000 or your production domain)
- 
       const path = `${url.pathname === '/' ? '' : url.pathname}`;
       url.pathname = `/home${path}`;
-     
-  
-
-  return NextResponse.rewrite(url);
+      return NextResponse.rewrite(url);
 }
