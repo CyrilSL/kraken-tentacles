@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
   }
 
    // Check if the request is made to the root domain (localhost:8000 or your production domain)
-   if (hostname === 'localhost:8000' || hostname === process.env.NEXT_PUBLIC_BASE_URL || 'https://twigstudio.in' || 'twigstudio.in' || 'https://twigstudio.in/' || 'twigstudio.in/' )  {
+   if (hostname === 'localhost:8000' || hostname === process.env.NEXT_PUBLIC_BASE_URL) {
     // Rewrite the root application to `/home` folder
     const path = `${url.pathname === '/' ? '' : url.pathname}`;
     url.pathname = `/home${path}`;
