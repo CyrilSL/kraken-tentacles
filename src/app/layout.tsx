@@ -4,7 +4,9 @@ import "styles/globals.css"
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://localhost:8000"
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  title: 'Kraken Store',
+  description:
+    'This is a meta description. Happy coding and have a nice day',
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {
