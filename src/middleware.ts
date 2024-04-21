@@ -11,17 +11,21 @@ export async function middleware(req: NextRequest) {
 
   if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return;
 
-  const hostname = req.headers.get('host');
-  console.log("Hostname : ",hostname)
-  console.log("env: ",process.env.NEXT_PUBLIC_BASE_URL)
-  const subdomain = getValidSubdomain(hostname);
+  const host = req.headers.get('host');
+  const subdomain = getValidSubdomain(host);
   if (subdomain) {
     // Subdomain available, rewriting
     console.log(`>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`);
     url.pathname = `/${subdomain}${url.pathname}`;
+    return NextResponse.rewrite(url);
   }
 
-
+     // Check if the request is made to the root domain (localhost:8000 or your production domain)
+ 
+      const path = `${url.pathname === '/' ? '' : url.pathname}`;
+      url.pathname = `/home${path}`;
+     
+  
 
   return NextResponse.rewrite(url);
 }
