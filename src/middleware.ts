@@ -28,7 +28,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // If no subdomain found, rewrite everything else to `[domain]/[slug]` dynamic route
-  const rootDomain = process.env.NEXT_PUBLIC_ROOT_DOMAIN || 'localhost:8000';
+  const rootDomain = process.env.NEXT_PUBLIC_BASE_URL || 'localhost:8000';
   if (host !== rootDomain) {
     return NextResponse.rewrite(new URL(`/${host}${url.pathname}`, req.url));
   }
