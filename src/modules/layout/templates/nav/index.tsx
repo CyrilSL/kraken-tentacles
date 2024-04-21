@@ -16,7 +16,8 @@ export default async function Nav({ subdomain }) {
   const regions = await listRegions().then((regions) => regions)
 
   const storeDetails = await fetchStoreDetails(subdomain);
-
+  const storeName = storeDetails.store?.name || "Store not found";
+  
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
       <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
@@ -34,7 +35,7 @@ export default async function Nav({ subdomain }) {
               data-testid="nav-store-link"
             >
                    {/* Display store name from API or "Loading..." or "Error" */}
-                   {storeDetails.store.name}
+                   {storeName}
             </Link>
           </div>
 
