@@ -13,7 +13,7 @@ export async function middleware(req: NextRequest) {
 
   const host = req.headers.get('host');
   const subdomain = getValidSubdomain(host);
-  
+  console.log("Host : "+host+" Subdomain : "+subdomain)
   if (subdomain && host) { // Ensure host is not null
     // Check if the request is a subdomain
     if (host.startsWith(`${subdomain}.`)) {
@@ -29,6 +29,7 @@ export async function middleware(req: NextRequest) {
 
   // If no subdomain found, rewrite everything else to `[domain]/[slug]` dynamic route
   const rootDomain = process.env.NEXT_PUBLIC_BASE_URL || 'localhost:8000';
+  console.log("Root Domian : ",rootDomain)
   if (host !== rootDomain) {
     return NextResponse.rewrite(new URL(`/${host}${url.pathname}`, req.url));
   }
