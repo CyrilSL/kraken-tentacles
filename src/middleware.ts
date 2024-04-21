@@ -9,35 +9,24 @@ export async function middleware(req: NextRequest) {
   // Clone the URL
   const url = req.nextUrl.clone();
 
-  if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('/_next')) return;
+  if (PUBLIC_FILE.test(url.pathname) || url.pathname.includes('_next')) return;
 
-  const host = req.headers.get('host');
-  const subdomain = getValidSubdomain(host);
-  console.log("Host : "+host+" Subdomain : "+subdomain)
-  if (subdomain && host) { // Ensure host is not null
-    // Check if the request is a subdomain
-    if (host.startsWith(`${subdomain}.`)) {
-      // Subdomain available, rewriting
-      console.log(`>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`);
-      url.pathname = `/${subdomain}${url.pathname}`;
-      return NextResponse.rewrite(url);
-    } else {
-      // The request is not a subdomain, return a 404 page
-      return NextResponse.redirect(new URL('/404', req.url));
-    }
+  const hostname = req.headers.get('host');
+  console.log("env: ",process.env.NEXT_PUBLIC_BASE_URL)
+  const subdomain = getValidSubdomain(hostname);
+  if (subdomain) {
+    // Subdomain available, rewriting
+    console.log(`>>> Rewriting: ${url.pathname} to /${subdomain}${url.pathname}`);
+    url.pathname = `/${subdomain}${url.pathname}`;
   }
 
-  // If no subdomain found, rewrite everything else to `[domain]/[slug]` dynamic route
-  const rootDomain = process.env.NEXT_PUBLIC_BASE_URL || 'localhost:8000';
-  console.log("Root Domian : ",rootDomain)
-  if (host !== rootDomain) {
-    return NextResponse.rewrite(new URL(`/${host}${url.pathname}`, req.url));
+   // Check if the request is made to the root domain (localhost:8000 or your production domain)
+   if (hostname === 'localhost:8000' || hostname === process.env.NEXT_PUBLIC_BASE_URL) {
+    // Rewrite the root application to `/home` folder
+    const path = `${url.pathname === '/' ? '' : url.pathname}`;
+    url.pathname = `/home${path}`;
+    return NextResponse.rewrite(url);
   }
 
-  // If the host is the root domain, return the original request
-  return NextResponse.next();
+  return NextResponse.rewrite(url);
 }
-
-export const config = {
-  matcher: ['/:path*'],
-};
