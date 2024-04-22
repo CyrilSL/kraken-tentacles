@@ -22,7 +22,4 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
-      const path = `${url.pathname === '/' ? '' : url.pathname}`;
-      url.pathname = `/home${path}`;
-      return NextResponse.rewrite(url);
 }
