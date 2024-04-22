@@ -22,7 +22,7 @@ export default function LoginForm() {
       <CardContent className="grid gap-4">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input id="email" type="email" placeholder="hello@email.com" required />
         </div>
         <div className="grid gap-2">
           <Label htmlFor="password">Password</Label>
