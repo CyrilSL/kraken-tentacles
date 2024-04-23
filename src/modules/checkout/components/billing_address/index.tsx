@@ -104,7 +104,7 @@ const BillingAddress = ({
           required
           data-testid="billing-city-input"
         />
-        <CountrySelect
+        {/* <CountrySelect
           name="billing_address.country_code"
           autoComplete="country"
           region={cart?.region}
@@ -112,7 +112,7 @@ const BillingAddress = ({
           onChange={handleChange}
           required
           data-testid="billing-country-select"
-        />
+        /> */}
         <Input
           label="State / Province"
           name="billing_address.province"

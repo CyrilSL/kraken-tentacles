@@ -31,7 +31,7 @@ const Shipping: React.FC<ShippingProps> = ({
   const router = useRouter()
   const pathname = usePathname()
 
-  const isOpen = searchParams.get("step") === "delivery"
+  const isOpen = searchParams ? searchParams.get("step") === "delivery" : false
 
   const handleEdit = () => {
     router.push(pathname + "?step=delivery", { scroll: false })

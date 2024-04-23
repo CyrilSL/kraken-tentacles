@@ -188,14 +188,14 @@ const EditAddress: React.FC<EditAddressProps> = ({
                 defaultValue={address.province || undefined}
                 data-testid="state-input"
               />
-              <CountrySelect
+              {/* <CountrySelect
                 name="country_code"
                 region={region}
                 required
                 autoComplete="country"
                 defaultValue={address.country_code || undefined}
                 data-testid="country-select"
-              />
+              /> */}
               <Input
                 label="Phone"
                 name="phone"

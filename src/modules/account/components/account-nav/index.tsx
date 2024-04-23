@@ -175,6 +175,7 @@ type AccountNavLinkProps = {
 }
 
 const AccountNavLink = ({ href, route, children, 'data-testid': dataTestId }: AccountNavLinkProps) => {
+  // @ts-ignore
   const { countryCode }: { countryCode: string } = useParams()
 
   const active = route.split(countryCode)[1] === href

@@ -31,6 +31,7 @@ const Payment = ({
   const router = useRouter()
   const pathname = usePathname()
 
+  //@ts-ignore
   const isOpen = searchParams.get("step") === "payment"
 
   const isStripe = cart?.payment_session?.provider_id === "stripe"
@@ -58,6 +59,7 @@ const Payment = ({
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
+      //@ts-ignore
       const params = new URLSearchParams(searchParams)
       params.set(name, value)
 
