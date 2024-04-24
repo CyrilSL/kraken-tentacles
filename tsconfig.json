@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
+    "checkJs": false,
     "noImplicitAny": false,
+    //disables ts build errors,
+    "noEmitOnError": false,
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
