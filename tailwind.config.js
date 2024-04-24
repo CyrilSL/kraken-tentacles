@@ -11,12 +11,8 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx}",
     "./src/modules/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@medusajs/ui/dist/**/*.{js,jsx,ts,tsx}",
-    "./src/**/*.{ts,tsx}",
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}", // Added from the second snippet
   ],
-  prefix: "",
   theme: {
     extend: {
       transitionProperty: {
@@ -65,18 +61,18 @@ module.exports = {
       fontSize: {
         "3xl": "2rem",
       },
-      // fontFamily: {
-      //   sans: [
-      //     "Inter",
-      //     "-apple-system",
-      //     "BlinkMacSystemFont",
-      //     "Segoe UI",
-      //     "Roboto",
-      //     "Helvetica Neue",
-      //     "Ubuntu",
-      //     "sans-serif",
-      //   ],
-      // },
+      fontFamily: {
+        sans: [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Ubuntu",
+          "sans-serif",
+        ],
+      },
       keyframes: {
         ring: {
           "0%": { transform: "rotate(0deg)" },
@@ -155,14 +151,6 @@ module.exports = {
             backgroundPosition: "350% 50%, 350% 50%",
           },
         },
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
       },
       animation: {
         ring: "ring 2.2s cubic-bezier(0.5, 0, 0.5, 1) infinite",
@@ -174,23 +162,13 @@ module.exports = {
         enter: "enter 200ms ease-out",
         "slide-in": "slide-in 1.2s cubic-bezier(.41,.73,.51,1.02)",
         leave: "leave 150ms ease-in forwards",
-        aurora: "aurora 60s linear infinite",
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-      },
-    },
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
+        aurora: "aurora 60s linear infinite", // Added from the second snippet
       },
     },
   },
   plugins: [
     require("tailwindcss-radix")(),
-    addVariablesForColors,
-    require("tailwindcss-animate"),
+    addVariablesForColors, // Added from the second snippet
   ],
 };
 

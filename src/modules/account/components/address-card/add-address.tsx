@@ -115,13 +115,13 @@ const AddAddress = ({ region }: { region: Region }) => {
                 autoComplete="address-level1"
                 data-testid="state-input"
               />
-              {/* <CountrySelect
+              <CountrySelect
                 region={region}
                 name="country_code"
                 required
                 autoComplete="country"
                 data-testid="country-select"
-              /> */}
+              />
               <Input label="Phone" name="phone" autoComplete="phone" data-testid="phone-input" />
             </div>
             {formState.error && (

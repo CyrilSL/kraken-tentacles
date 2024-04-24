@@ -33,11 +33,9 @@ const Addresses = ({
   const pathname = usePathname()
   const params = useParams()
 
-  //@ts-ignore
   const countryCode = params.countryCode as string
 
-  
-  const isOpen = searchParams? searchParams.get("step") === "address":false
+  const isOpen = searchParams.get("step") === "address"
 
   const { state: sameAsSBilling, toggle: toggleSameAsBilling } = useToggleState(
     cart?.shipping_address && cart?.billing_address

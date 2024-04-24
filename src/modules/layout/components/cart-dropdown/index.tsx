@@ -23,6 +23,8 @@ const CartDropdown = ({
   )
   const [cartDropdownOpen, setCartDropdownOpen] = useState(false)
 
+  const { countryCode } = useParams()
+
   const open = () => setCartDropdownOpen(true)
   const close = () => setCartDropdownOpen(false)
 
@@ -61,8 +63,10 @@ const CartDropdown = ({
   const pathname = usePathname()
 
   // open cart dropdown when modifying the cart items, but only if we're not on the cart page
-  //@ts-ignore
-  useEffect(() => { if (itemRef.current !== totalItems && !pathname.includes("/cart")) {timedOpen()}
+  useEffect(() => {
+    if (itemRef.current !== totalItems && !pathname.includes("/cart")) {
+      timedOpen()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalItems, itemRef.current])
 
