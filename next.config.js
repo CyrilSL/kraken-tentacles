@@ -1,5 +1,5 @@
-const { withStoreConfig } = require("./store-config")
-const store = require("./store.config.json")
+const { withStoreConfig } = require("./store-config");
+const store = require("./store.config.json");
 
 /**
  * @type {import('next').NextConfig}
@@ -27,8 +27,10 @@ const nextConfig = withStoreConfig({
       },
     ],
   },
-})
+  // Add the staticPageGenerationTimeout property here
+  staticPageGenerationTimeout: 120, // Adjust the value as needed (default is 60 seconds)
+});
 
-console.log("next.config.js", JSON.stringify(module.exports, null, 2))
+console.log("next.config.js", JSON.stringify(module.exports, null, 2));
 
-module.exports = nextConfig
+module.exports = nextConfig;

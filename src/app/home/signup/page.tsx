@@ -8,20 +8,9 @@ import { SignupForm } from "@/components/signup";
 export default function Homepage() {
   return (
    
-    <AuroraBackground className="">
-      <motion.div
-        initial={{ opacity: 0.0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{
-          delay: 0.3,
-          duration: 0.8,
-          ease: "easeInOut",
-        }}
-        className="relative flex flex-col gap-4 items-center justify-center px-4"
-      >
+    <div className="relative flex flex-col  h-[100vh] items-center justify-center bg-zinc-50 dark:bg-zinc-900  text-slate-950 transition-bg">
        <SignupForm />
-      </motion.div>
-    </AuroraBackground>
+     </div>
 
   );
 }
