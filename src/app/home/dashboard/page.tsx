@@ -15,9 +15,7 @@ export default function DashboardPage() {
   } = useAdminCustomQuery(
     `admin/fetch_user_stores/` + user?.id,
     [`userStores`],
-    {
-      enabled: !!user,
-    }
+    
   );
 
   if (isUserLoading || isLoadingUserStores) {
