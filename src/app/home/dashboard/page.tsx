@@ -17,6 +17,8 @@ console.log(user);
     [`userStores`],
   );
 
+  
+
   if (isUserLoading || isLoadingUserStores) {
     return <div>Loading...</div>;
   }
@@ -26,7 +28,8 @@ console.log(user);
   }
 
   const userStores = userStoresData?.stores || [];
-
+  console.log("User ID : ",user?.id)
+  console.log("User stores : ",userStores)
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {userStores.map((store) => (
