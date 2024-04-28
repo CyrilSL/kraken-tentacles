@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   const { user, isLoading: isUserLoading } = useAdminSession();
-console.log(user);
+
   const {
     data: userStoresData,
     isLoading: isLoadingUserStores,
@@ -15,9 +15,10 @@ console.log(user);
   } = useAdminCustomQuery(
     `admin/fetch_user_stores/` + user?.id,
     [`userStores`],
+    {
+      enabled: !!user,
+    }
   );
-
-  
 
   if (isUserLoading || isLoadingUserStores) {
     return <div>Loading...</div>;
@@ -29,7 +30,7 @@ console.log(user);
 
   const userStores = userStoresData?.stores || [];
   console.log("User ID : ",user?.id)
-  console.log("User stores : ",userStores)
+  console.log("Stores : ", userStores)
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {userStores.map((store) => (
