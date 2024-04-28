@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
   const { user, isLoading: isUserLoading } = useAdminSession();
-
+console.log(user);
   const {
     data: userStoresData,
     isLoading: isLoadingUserStores,
@@ -15,7 +15,6 @@ export default function DashboardPage() {
   } = useAdminCustomQuery(
     `admin/fetch_user_stores/` + user?.id,
     [`userStores`],
-    
   );
 
   if (isUserLoading || isLoadingUserStores) {
