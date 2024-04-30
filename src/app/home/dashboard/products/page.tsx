@@ -115,12 +115,14 @@ const handleProductClick = (productId) => {
                     Export
                   </span>
                 </Button>
+                <Link href='/dashboard/products/add-product'>
                 <Button size="sm" className="h-8 gap-1">
                   <PlusCircle className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
                     Add Product
                   </span>
                 </Button>
+                </Link>
               </div>
             </div>
             <TabsContent value="all">
@@ -157,7 +159,7 @@ const handleProductClick = (productId) => {
                     <TableBody>
   {isLoading ? (
     <tr>
-      <td>Loading...</td>
+      {/* <td>Loading...</td> */}
     </tr>
   ) : !products || products.length === 0 ? (
     <tr>
