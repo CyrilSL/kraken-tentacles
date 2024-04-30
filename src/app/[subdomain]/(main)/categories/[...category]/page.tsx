@@ -38,31 +38,31 @@ export async function generateStaticParams() {
   return staticParams
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  try {
-    const { product_categories } = await getCategoryByHandle(
-      params.category
-    ).then((product_categories) => product_categories)
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   try {
+//     const { product_categories } = await getCategoryByHandle(
+//       params.category
+//     ).then((product_categories) => product_categories)
 
-    const title = product_categories
-      .map((category) => category.name)
-      .join(" | ")
+//     const title = product_categories
+//       .map((category) => category.name)
+//       .join(" | ")
 
-    const description =
-      product_categories[product_categories.length - 1].description ??
-      `${title} category.`
+//     const description =
+//       product_categories[product_categories.length - 1].description ??
+//       `${title} category.`
 
-    return {
-      title: `${title} | Haloweave Store`,
-      description,
-      alternates: {
-        canonical: `${params.category.join("/")}`,
-      },
-    }
-  } catch (error) {
-    notFound()
-  }
-}
+//     return {
+//       title: `${title} | Haloweave Store`,
+//       description,
+//       alternates: {
+//         canonical: `${params.category.join("/")}`,
+//       },
+//     }
+//   } catch (error) {
+//     notFound()
+//   }
+// }
 
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { sortBy, page } = searchParams
