@@ -1,55 +1,26 @@
 'use client'
+import React, { useState, useEffect } from 'react';
+import { useAdminGetSession, useAdminCustomQuery, useAdminCustomDelete } from "medusa-react";
+import { Checkbox, Label, Table, Heading, Button, Container } from "@medusajs/ui";
+import { useAdminStore } from "medusa-react"
 
-import { useAdminCustomQuery } from "medusa-react";
-import useAdminSession from "@/lib/useAdminSession";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
-export default function DashboardPage() {
-  const { user, isLoading: isUserLoading } = useAdminSession();
 
-  const {
-    data: userStoresData,
-    isLoading: isLoadingUserStores,
-    error: userStoresError,
-  } = useAdminCustomQuery(
-    `admin/fetch_user_stores/` + user?.id,
-    [`userStores`],
-    {
-      enabled: !!user,
-    }
-  );
-
-  if (isUserLoading || isLoadingUserStores) {
-    return <div>Loading...</div>;
-  }
-
-  if (userStoresError) {
-    return <div>Error fetching user stores: {userStoresError.message}</div>;
-  }
-
-  const userStores = userStoresData?.stores || [];
-  console.log("User ID : ",user?.id)
-  console.log("Stores : ", userStores)
+const StoreDetails = () => {
+    const { 
+        store,
+        isLoading
+      } = useAdminStore();
+      console.log(store);
   return (
-    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {userStores.map((store) => (
-        <Card key={store.id} className="w-full">
-          <CardHeader>
-            <CardTitle>{store.name}</CardTitle>
-            <CardDescription>Launched on {new Date(store.created_at).toLocaleDateString()}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {/* Add store details or other content here */}
-            <p>ID: {store.id}</p>
-            <p>Currency: {store.default_currency_code}</p>
-            <p>Domain: {store.domain || "N/A"}</p>
-          </CardContent>
-          <CardFooter>
-            <Button variant="outline">View Store</Button>
-          </CardFooter>
-        </Card>
-      ))}
+    <Container>
+      <div>
+      <h2>Admin Store Data</h2>
+      {/* Display your store data here */}
+      <pre>{JSON.stringify(store, null, 2)}</pre>
     </div>
+    </Container>
   );
-}
+};
+
+export default StoreDetails;
