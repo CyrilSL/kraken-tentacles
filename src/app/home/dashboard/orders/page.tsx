@@ -308,19 +308,19 @@ export default function OrderPage() {
                   <ul className="grid gap-3">
                     <li className="flex items-center justify-between">
                       <span className="text-muted-foreground">Subtotal</span>
-                      <span>{order.subtotal}</span>
+                      <span>${order.subtotal}</span>
                     </li>
                     <li className="flex items-center justify-between">
                       <span className="text-muted-foreground">Shipping</span>
-                      <span>{order.shipping_total}</span>
+                      <span>${order.shipping_total}</span>
                     </li>
                     <li className="flex items-center justify-between">
                       <span className="text-muted-foreground">Tax</span>
-                      <span>{order.tax_total}</span>
+                      <span>${order.tax_total}</span>
                     </li>
                     <li className="flex items-center justify-between font-semibold">
                       <span className="text-muted-foreground">Total</span>
-                      <span>{order.total}</span>
+                      <span>${order.total}</span>
                     </li>
                   </ul>
                 </div>
