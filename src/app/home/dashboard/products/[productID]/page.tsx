@@ -82,6 +82,7 @@ export default function Page({ params }: { params: { productID: string } }) {
         isLoading, 
       } = useAdminProduct(params.productID)
       console.log(product?.variants)    
+      console.log("Product : ",product)
     return (
         <div>
         {/* {isLoading && <span>Loading...</span>} */}
@@ -363,7 +364,7 @@ export default function Page({ params }: { params: { productID: string } }) {
                         alt="Product image"
                         className="aspect-square w-full rounded-md object-cover"
                         height="300"
-                        src={product?.thumbnail ?? '/default-thumbnail.jpg'}
+                        src={product?.thumbnail ?? '/placeholder.svg'}
                         width="300"
                       />
                       <div className="grid grid-cols-3 gap-2">
