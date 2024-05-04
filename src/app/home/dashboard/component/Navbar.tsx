@@ -125,14 +125,14 @@ const Navbar = () => {
                   Dashboard
                 </Link>
                 <Link
-                  href="#"
+                  href="dashboard/orders"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                 >
                   <ShoppingCart className="h-5 w-5" />
                   Orders
                 </Link>
                 <Link
-                  href="#"
+                  href="/dashboard/products"
                   className="flex items-center gap-4 px-2.5 text-foreground"
                 >
                   <Package className="h-5 w-5" />
