@@ -44,42 +44,41 @@ export default function Settings() {
   };
 
   const updateDomain = useAdminCustomPost<DomainUpdateRequest, DomainUpdateResponse>(
-    "/admin/set_domain",
-    []
+    "/admin/add_domain",
+    ["updateDomain"]
   );
 
   const handleDomainNameChange = (e) => {
     setDomainName(e.target.value);
   };
 
-  const handleSaveDomainName = () => {
-    if (!store?.id || !domainName) {
+  const handleUpdateDomain = () => {
+    if (store?.id && domainName) {
+      updateDomain.mutate(
+        {
+          storeId: store.id,
+          domain: domainName,
+        },
+        {
+          onSuccess: () => {
+            toast({
+              title: "Domain updated successfully!",
+              description: `Visit your new store at ${domainName}.${cleanURL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL)}`,
+            });
+          },
+          onError: (error) => {
+            console.error("Failed to update domain:", error);
+            toast({
+              title: "Error",
+              description: "Failed to update domain. Please try again.",
+              variant: "destructive",
+            });
+          },
+        }
+      );
+    } else {
       console.error("Missing required values: storeId or domain");
-      return;
     }
-
-    updateDomain.mutate(
-      {
-        storeId: store.id,
-        domain: domainName,
-      },
-      {
-        onSuccess: ({ message }) => {
-          toast({
-            title: "Subdomain Successfully Set",
-            description: "Visit your new store at your subdomain : " + domainName + "." + cleanURL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL),
-          });
-        },
-        onError: (error) => {
-          console.error("Error setting subdomain:", error);
-          toast({
-            title: "Error",
-            description: "Failed to set subdomain. Please try again.",
-            variant: "destructive",
-          });
-        },
-      }
-    );
   };
 
   return (
@@ -122,7 +121,7 @@ export default function Settings() {
                 </form>
               </CardContent>
               <CardFooter className="border-t px-6 py-4">
-                <Button onClick={handleSaveDomainName}>Save</Button>
+                <Button onClick={handleUpdateDomain}>Save</Button>
               </CardFooter>
             </Card>
           </div>
