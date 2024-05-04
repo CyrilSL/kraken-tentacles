@@ -23,20 +23,63 @@ import {
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useState } from "react"
-export default function Settings() {
-  const cleanURL = (url) => {
-    return url.replace(/(^\w+:|^)\/\//, "")
-  }
+import { useToast } from "@/components/ui/use-toast"
+import { useAdminStore, useAdminCustomPost } from "medusa-react"
 
+type DomainUpdateRequest = {
+  storeId: string;
+  domain: string;
+};
+
+type DomainUpdateResponse = {
+  message: string;
+};
+
+export default function Settings() {
   const [domainName, setDomainName] = useState("");
+  const { store, isLoading } = useAdminStore();
+  const { toast } = useToast();
+  const cleanURL = (url) => {
+    return url.replace(/(^\w+:|^)\/\//, "");
+  };
+
+  const updateDomain = useAdminCustomPost<DomainUpdateRequest, DomainUpdateResponse>(
+    "/admin/set_domain",
+    []
+  );
 
   const handleDomainNameChange = (e) => {
     setDomainName(e.target.value);
   };
 
   const handleSaveDomainName = () => {
-    // Implement logic to save the domain name
-    console.log("Saving domain name:", domainName);
+    if (!store?.id || !domainName) {
+      console.error("Missing required values: storeId or domain");
+      return;
+    }
+
+    updateDomain.mutate(
+      {
+        storeId: store.id,
+        domain: domainName,
+      },
+      {
+        onSuccess: ({ message }) => {
+          toast({
+            title: "Subdomain Successfully Set",
+            description: "Visit your new store at your subdomain : " + domainName + "." + cleanURL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL),
+          });
+        },
+        onError: (error) => {
+          console.error("Error setting subdomain:", error);
+          toast({
+            title: "Error",
+            description: "Failed to set subdomain. Please try again.",
+            variant: "destructive",
+          });
+        },
+      }
+    );
   };
 
   return (
@@ -64,7 +107,7 @@ export default function Settings() {
               <CardHeader>
                 <CardTitle>Subdomain Name</CardTitle>
                 <CardDescription>
-                  Set your unique domain name. 
+                  Set your unique domain name.
                   <br></br>
                   your-domain.{cleanURL(process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL)}
                 </CardDescription>
@@ -72,8 +115,7 @@ export default function Settings() {
               <CardContent>
                 <form className="flex flex-col gap-4">
                   <Input
-                    placeholder="Project Name"
-                    defaultValue="/content/plugins"
+                    placeholder="Enter your domain"
                     value={domainName}
                     onChange={handleDomainNameChange}
                   />

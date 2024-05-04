@@ -79,6 +79,8 @@ import {
 import { ProductVariant } from "@medusajs/product"
 import { ProductVariantPricesCreateReq } from "@medusajs/medusa/dist/types/product-variant"
 import { useAdminUploadFile } from "medusa-react"
+import { useToast } from "@/components/ui/use-toast"
+
 
 enum ProductStatus {
   DRAFT = "draft",
@@ -163,6 +165,7 @@ const initialFormData: CreateProductData = {
 }
 
 export default function AddProduct() {
+  const { toast } = useToast()
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const [formData, setFormData] = useState<CreateProductData>(initialFormData)
   const [uploadStatus, setUploadStatus] = useState<boolean | null>(null)
@@ -208,7 +211,11 @@ export default function AddProduct() {
   const handleCreate = () => {
     // Basic validation example: check if the title is not empty
     if (!formData.title) {
-      console.error("Title is required.")
+      toast({
+        variant: "destructive",
+        title: "Title is required",
+        description: "Title field is necessary to add a product",
+      })
       return // Prevent submission if validation fails
     }
 
@@ -219,8 +226,12 @@ export default function AddProduct() {
 
     // Proceed with form submission if validation passes
     if (formData.images.length === 0) {
-      console.log("No Images")
-      return
+toast({
+        variant: "destructive",
+        title: "Image is required",
+        description: "At least one image is necessary to add a product",
+      })     
+       return
     }
 
     formData.status = selectedStatus

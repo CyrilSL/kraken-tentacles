@@ -3,6 +3,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Navbar from "./component/Navbar";
+import { Toaster } from "@/components/ui/toaster"
+
 
 export default function DashboardLayout({ children }) {
   return (
@@ -14,6 +16,7 @@ export default function DashboardLayout({ children }) {
         <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
           {children}
         </main>
+        <Toaster />
       </div>
     </div>
   );

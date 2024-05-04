@@ -58,7 +58,7 @@ const Navbar = () => {
             </TooltipTrigger>
             <TooltipContent side="right">Products</TooltipContent>
           </Tooltip>
-          <Tooltip>
+          {/* <Tooltip>
             <TooltipTrigger asChild>
               <Link
                 href="/dashboard/customers"
@@ -81,7 +81,7 @@ const Navbar = () => {
               </Link>
             </TooltipTrigger>
             <TooltipContent side="right">Analytics</TooltipContent>
-          </Tooltip>
+          </Tooltip> */}
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
           <Tooltip>
