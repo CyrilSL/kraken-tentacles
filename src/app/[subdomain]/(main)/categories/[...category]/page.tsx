@@ -76,11 +76,8 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   }
 
   return (
-    <CategoryTemplate
-      categories={product_categories}
-      sortBy={sortBy}
-      page={page}
-      countryCode={params.countryCode}
-    />
+    <h1>
+      Categroies here
+      </h1>
   )
 }
