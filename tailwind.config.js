@@ -61,18 +61,18 @@ module.exports = {
       fontSize: {
         "3xl": "2rem",
       },
-      // fontFamily: {
-      //   sans: [
-      //     "Inter",
-      //     "-apple-system",
-      //     "BlinkMacSystemFont",
-      //     "Segoe UI",
-      //     "Roboto",
-      //     "Helvetica Neue",
-      //     "Ubuntu",
-      //     "sans-serif",
-      //   ],
-      // },
+      fontFamily: {
+        sans: [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica Neue",
+          "Ubuntu",
+          "sans-serif",
+        ],
+      },
       keyframes: {
         ring: {
           "0%": { transform: "rotate(0deg)" },

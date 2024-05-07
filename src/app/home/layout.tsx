@@ -9,9 +9,10 @@ export default function Layout({ children }) {
   return (
     <MedusaProvider
       queryClientProviderProps={{ client: queryClient }}
-      baseUrl={process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:9000'}
+      baseUrl="http://localhost:9000"
     >
       <div>
+        {/* Common layout elements can go here */}
         {children}
       </div>
     </MedusaProvider>

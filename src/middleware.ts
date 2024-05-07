@@ -23,6 +23,6 @@ export async function middleware(req: NextRequest) {
   }
 
       const path = `${url.pathname === '/' ? '' : url.pathname}`;
-      url.pathname = `/home${path}`;      
+      url.pathname = `/home${path}`;
       return NextResponse.rewrite(url);
 }
