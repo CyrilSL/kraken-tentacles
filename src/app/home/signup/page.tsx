@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import React from "react";
-import { AuroraBackground } from "@/components/aurora-background";
 import { SignupForm } from "@/components/signup";
 
 export default function Homepage() {
