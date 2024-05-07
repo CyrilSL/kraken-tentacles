@@ -37,7 +37,7 @@ export default function CategoryTemplate({
               <span key={parent.id} className="text-ui-fg-subtle">
                 <Link
                   className="mr-4 hover:text-black"
-                  href={`/categories/${parent.handle}`}
+                  href="#"
                   data-testid="sort-by-link"
                 >
                   {parent.name}
@@ -57,7 +57,7 @@ export default function CategoryTemplate({
             <ul className="grid grid-cols-1 gap-2">
               {category.category_children?.map((c) => (
                 <li key={c.id}>
-                  <InteractiveLink href={`/categories/${c.handle}`}>
+                  <InteractiveLink href={`#`}>
                     {c.name}
                   </InteractiveLink>
                 </li>
