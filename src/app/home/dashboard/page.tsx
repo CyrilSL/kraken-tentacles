@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { useAdminStore } from "medusa-react"
-
+import Link from 'next/link';
 import {
   Card,
   CardContent,
@@ -10,13 +10,13 @@ import {
   CardTitle,
   CardFooter
 } from "@/components/ui/card"
-
+import { Button } from '@/components/ui/button';
 type Props = {
   userId: string
 }
 
 
-const StoreDetails = () => {
+const DashboardHome = () => {
     const { 
         store,
         isLoading
@@ -28,6 +28,21 @@ const StoreDetails = () => {
     <div className="flex min-h-screen w-full flex-col">
       <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
         <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <Card className="sm:col-span-2">
+      <CardHeader className="pb-3">
+        <CardTitle>Create a new Product!</CardTitle>
+        <CardDescription className="max-w-lg text-balance leading-relaxed">
+          Introducing Our Dynamic Orders Dashboard for Seamless Management and
+          Insightful Analysis.
+        </CardDescription>
+      </CardHeader>
+      <CardFooter>
+        <Link href="/dashboard/products/create-product">
+        <Button>Create Product</Button>
+        </Link>
+
+      </CardFooter>
+    </Card>
         <Card className="sm:col-span-2" x-chunk="dashboard-05-chunk-0">
             <CardHeader className="pb-3">
               <CardTitle>Hello! </CardTitle>
@@ -38,7 +53,6 @@ const StoreDetails = () => {
             </CardHeader>
             
           </Card>
-          
         </div>
         <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
        
@@ -51,4 +65,6 @@ const StoreDetails = () => {
   );
 };
 
-export default StoreDetails;
+export default DashboardHome;
+
+
