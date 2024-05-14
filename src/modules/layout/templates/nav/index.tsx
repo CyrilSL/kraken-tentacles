@@ -6,7 +6,7 @@ import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 
 import { getValidSubdomain } from "@lib/util/subdomain"
-import { fetchStoreDetails } from "@lib/util/fetch-store-details"
+//import { fetchStoreDetails } from "@lib/util/fetch-store-details"
 
 
 
@@ -15,8 +15,9 @@ export default async function Nav({ subdomain }) {
 
   const regions = await listRegions().then((regions) => regions)
 
-  const storeDetails = await fetchStoreDetails(subdomain);
-  const storeName = storeDetails.store?.name || "Store not found";
+  //const storeDetails = await fetchStoreDetails(subdomain);
+  //const storeName = storeDetails.store?.name || "Store not found";
+  const storeName = "Store not found";
   
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">

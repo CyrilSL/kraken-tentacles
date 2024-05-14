@@ -1,169 +1,427 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/CExvbVXT4sp
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+'use client'
+import React from "react"
+import { useAdminProduct } from "medusa-react"
+
+import Image from "next/image"
+import Link from "next/link"
+import {
+  ChevronLeft,
+  Home,
+  LineChart,
+  Package,
+  Package2,
+  PanelLeft,
+  PlusCircle,
+  Search,
+  Settings,
+  ShoppingCart,
+  Upload,
+  Users2,
+} from "lucide-react"
+
+import { Badge } from "@/components/ui/badge"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
-import { DropdownMenuTrigger, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuItem, DropdownMenuContent, DropdownMenu } from "@/components/ui/dropdown-menu"
-import { CardTitle, CardDescription, CardHeader, CardContent, Card } from "@/components/ui/card"
-import { Label } from "@/components/ui/label"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import { Textarea } from "@/components/ui/textarea"
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/ui/toggle-group"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
-export default function Component() {
-  return (
-    <div className="flex flex-col">
-      <header className="flex h-14 items-center gap-4 border-b bg-gray-100/40 px-6 dark:bg-gray-800/40 lg:h-[60px]">
-        <div className="flex-1">
-          <h1 className="text-lg font-semibold md:text-2xl">Upload Product</h1>
-        </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              className="rounded-full border border-gray-200 w-8 h-8 dark:border-gray-800"
-              size="icon"
-              variant="ghost"
-            >
-              <img
-                alt="Avatar"
-                className="rounded-full"
-                height="32"
-                src="/placeholder.svg"
-                style={{
-                  aspectRatio: "32/32",
-                  objectFit: "cover",
-                }}
-                width="32"
-              />
-              <span className="sr-only">Toggle user menu</span>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </header>
-      <main className="flex-1 p-4 md:p-6">
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="col-span-2 lg:col-span-1">
-            <CardHeader>
-              <CardTitle>Product Details</CardTitle>
-              <CardDescription>Fill out the details for your digital product.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-2">
-                <Label htmlFor="title">Title</Label>
-                <Input id="title" placeholder="Enter product title" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="price">Price</Label>
-                <Input id="price" placeholder="Enter product price" type="number" />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea id="description" placeholder="Enter product description" />
-              </div>
-            </CardContent>
-          </Card>
-          <Card className="col-span-2 lg:col-span-1">
-            <CardHeader>
-              <CardTitle>Thumbnail</CardTitle>
-              <CardDescription>Upload an image to represent your product.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-2">
-                <Button className="w-full" variant="outline">
-                  <UploadIcon className="h-4 w-4 mr-2" />
-                  Upload Thumbnail
+
+export default function Page({ params }: { params: { productID: string } }) {
+
+    const { 
+        product, 
+        isLoading, 
+      } = useAdminProduct(params.productID)
+      console.log(product?.variants)    
+      console.log("Product : ",product)
+    return (
+        <div>
+        {/* {isLoading && <span>Loading...</span>} */}
+        
+        <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+          <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
+            <div className="flex items-center gap-4">
+                <Link href="/dashboard/products">
+              <Button variant="outline" size="icon" className="h-7 w-7">
+                <ChevronLeft className="h-4 w-4" />
+                <span className="sr-only">Back</span>
+              </Button>
+              </Link>
+              <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
+                {product?.title}
+              </h1>
+              <Badge variant="outline" className="ml-auto sm:ml-0">
+                In stock
+              </Badge>
+              <div className="hidden items-center gap-2 md:ml-auto md:flex">
+                <Button variant="outline" size="sm">
+                  Discard
                 </Button>
-                <img
-                  alt="Product Thumbnail"
-                  className="rounded-lg object-cover"
-                  height={200}
-                  src="/placeholder.svg"
-                  style={{
-                    aspectRatio: "200/200",
-                    objectFit: "cover",
-                  }}
-                  width={200}
-                />
+                <Button size="sm">Save Product</Button>
               </div>
-            </CardContent>
-          </Card>
-          <Card className="col-span-2 lg:col-span-1">
-            <CardHeader>
-              <CardTitle>Digital Asset</CardTitle>
-              <CardDescription>Upload the digital file for your product.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="flex flex-col items-center justify-center space-y-2">
-                <Button className="w-full" variant="outline">
-                  <UploadIcon className="h-4 w-4 mr-2" />
-                  Upload File
-                </Button>
-                <div className="flex items-center gap-2">
-                  <FileIcon className="h-6 w-6 text-gray-500 dark:text-gray-400" />
-                  <div>
-                    <div className="font-medium">product.zip</div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">2.3 MB</div>
-                  </div>
-                </div>
+            </div>
+            <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
+              <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+                <Card x-chunk="dashboard-07-chunk-0">
+                  <CardHeader>
+                    <CardTitle>Product Details</CardTitle>
+                    {/* <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit
+                    </CardDescription> */}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6">
+                      <div className="grid gap-3">
+                        <Label htmlFor="name">Name</Label>
+                        <Input
+                          id="name"
+                          type="text"
+                          className="w-full"
+                          defaultValue={product?.title}
+                        />
+                      </div>
+                      <div className="grid gap-3">
+                        <Label htmlFor="description">Description</Label>
+                        <Textarea
+                          id="description"
+                          defaultValue={product?.description || ''}
+                          className="min-h-32"
+                        />
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card x-chunk="dashboard-07-chunk-1">
+                  <CardHeader>
+                    <CardTitle>Stock</CardTitle>
+                    {/* <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit
+                    </CardDescription> */}
+                  </CardHeader>
+                  <CardContent>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="w-[100px]">SKU</TableHead>
+                          <TableHead>Stock</TableHead>
+                          <TableHead>Price</TableHead>
+                          <TableHead className="w-[100px]">Size</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell className="font-semibold">
+                            GGPC-001
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="stock-1" className="sr-only">
+                              Stock
+                            </Label>
+                            <Input
+                              id="stock-1"
+                              type="number"
+                              defaultValue="100"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="price-1" className="sr-only">
+                              Price
+                            </Label>
+                            <Input
+                              id="price-1"
+                              type="number"
+                              defaultValue="99.99"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <ToggleGroup
+                              type="single"
+                              defaultValue="s"
+                              variant="outline"
+                            >
+                              <ToggleGroupItem value="s">S</ToggleGroupItem>
+                              <ToggleGroupItem value="m">M</ToggleGroupItem>
+                              <ToggleGroupItem value="l">L</ToggleGroupItem>
+                            </ToggleGroup>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-semibold">
+                            GGPC-002
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="stock-2" className="sr-only">
+                              Stock
+                            </Label>
+                            <Input
+                              id="stock-2"
+                              type="number"
+                              defaultValue="143"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="price-2" className="sr-only">
+                              Price
+                            </Label>
+                            <Input
+                              id="price-2"
+                              type="number"
+                              defaultValue="99.99"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <ToggleGroup
+                              type="single"
+                              defaultValue="m"
+                              variant="outline"
+                            >
+                              <ToggleGroupItem value="s">S</ToggleGroupItem>
+                              <ToggleGroupItem value="m">M</ToggleGroupItem>
+                              <ToggleGroupItem value="l">L</ToggleGroupItem>
+                            </ToggleGroup>
+                          </TableCell>
+                        </TableRow>
+                        <TableRow>
+                          <TableCell className="font-semibold">
+                            GGPC-003
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="stock-3" className="sr-only">
+                              Stock
+                            </Label>
+                            <Input
+                              id="stock-3"
+                              type="number"
+                              defaultValue="32"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <Label htmlFor="price-3" className="sr-only">
+                              Stock
+                            </Label>
+                            <Input
+                              id="price-3"
+                              type="number"
+                              defaultValue="99.99"
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <ToggleGroup
+                              type="single"
+                              defaultValue="s"
+                              variant="outline"
+                            >
+                              <ToggleGroupItem value="s">S</ToggleGroupItem>
+                              <ToggleGroupItem value="m">M</ToggleGroupItem>
+                              <ToggleGroupItem value="l">L</ToggleGroupItem>
+                            </ToggleGroup>
+                          </TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </CardContent>
+                  <CardFooter className="justify-center border-t p-4">
+                    <Button size="sm" variant="ghost" className="gap-1">
+                      <PlusCircle className="h-3.5 w-3.5" />
+                      Add Variant
+                    </Button>
+                  </CardFooter>
+                </Card>
+                <Card x-chunk="dashboard-07-chunk-2">
+                  <CardHeader>
+                    <CardTitle>Product Category</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6 sm:grid-cols-3">
+                      <div className="grid gap-3">
+                        <Label htmlFor="category">Category</Label>
+                        <Select>
+                          <SelectTrigger
+                            id="category"
+                            aria-label="Select category"
+                          >
+                            <SelectValue placeholder="Select category" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="clothing">Clothing</SelectItem>
+                            <SelectItem value="electronics">
+                              Electronics
+                            </SelectItem>
+                            <SelectItem value="accessories">
+                              Accessories
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="grid gap-3">
+                        <Label htmlFor="subcategory">
+                          Subcategory (optional)
+                        </Label>
+                        <Select>
+                          <SelectTrigger
+                            id="subcategory"
+                            aria-label="Select subcategory"
+                          >
+                            <SelectValue placeholder="Select subcategory" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="t-shirts">T-Shirts</SelectItem>
+                            <SelectItem value="hoodies">Hoodies</SelectItem>
+                            <SelectItem value="sweatshirts">
+                              Sweatshirts
+                            </SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
-            </CardContent>
-          </Card>
+              <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+                <Card x-chunk="dashboard-07-chunk-3">
+                  <CardHeader>
+                    <CardTitle>Product Status</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-6">
+                      <div className="grid gap-3">
+                        <Label htmlFor="status">Status</Label>
+                        <Select>
+                          <SelectTrigger id="status" aria-label="Select status">
+                            <SelectValue placeholder="Select status" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="draft">Draft</SelectItem>
+                            <SelectItem value="published">Active</SelectItem>
+                            <SelectItem value="archived">Archived</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card
+                  className="overflow-hidden" x-chunk="dashboard-07-chunk-4"
+                >
+                  <CardHeader>
+                    <CardTitle>Product Images</CardTitle>
+                    {/* <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit
+                    </CardDescription> */}
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-2">
+                      <Image
+                        alt="Product image"
+                        className="aspect-square w-full rounded-md object-cover"
+                        height="300"
+                        src={product?.thumbnail ?? '/placeholder.svg'}
+                        width="300"
+                      />
+                      <div className="grid grid-cols-3 gap-2">
+                        <button>
+                          <Image
+                            alt="Product image"
+                            className="aspect-square w-full rounded-md object-cover"
+                            height="84"
+                            src="/placeholder.svg"
+                            width="84"
+                          />
+                        </button>
+                        <button>
+                          <Image
+                            alt="Product image"
+                            className="aspect-square w-full rounded-md object-cover"
+                            height="84"
+                            src="/placeholder.svg"
+                            width="84"
+                          />
+                        </button>
+                        <button className="flex aspect-square w-full items-center justify-center rounded-md border border-dashed">
+                          <Upload className="h-4 w-4 text-muted-foreground" />
+                          <span className="sr-only">Upload</span>
+                        </button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <Card x-chunk="dashboard-07-chunk-5">
+                  <CardHeader>
+                    <CardTitle>Archive Product</CardTitle>
+                    {/* <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit.
+                    </CardDescription> */}
+                    
+                  </CardHeader>
+                  <CardContent>
+                    <div></div>
+                    <Button size="sm" variant="secondary">
+                      Archive Product
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+            <div className="flex items-center justify-center gap-2 md:hidden">
+              <Button variant="outline" size="sm">
+                Discard
+              </Button>
+              <Button size="sm">Save Product</Button>
+            </div>
+          </div>
+    
+        </main>
+        
         </div>
-        <div className="mt-6 flex justify-end gap-2">
-          <Button variant="outline">Cancel</Button>
-          <Button>Upload Product</Button>
-        </div>
-      </main>
-    </div>
-  )
-}
 
-function FileIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z" />
-      <path d="M14 2v4a2 2 0 0 0 2 2h4" />
-    </svg>
-  )
-}
-
-
-function UploadIcon(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-      <polyline points="17 8 12 3 7 8" />
-      <line x1="12" x2="12" y1="3" y2="15" />
-    </svg>
-  )
-}
+    )
+  }
