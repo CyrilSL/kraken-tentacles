@@ -70,7 +70,7 @@ export default function Products() {
     const router = useRouter()
 
 const handleProductClick = (productId) => {
-  router.push(`/dashboard/products/${productId}`)
+  router.push(`/dashboard/products/edit/digital/${productId}`)
 }
 
 

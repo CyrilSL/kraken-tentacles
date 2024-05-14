@@ -80,6 +80,7 @@ import { ProductVariant } from "@medusajs/product"
 import { ProductVariantPricesCreateReq } from "@medusajs/medusa/dist/types/product-variant"
 import { useAdminUploadFile } from "medusa-react"
 import { useToast } from "@/components/ui/use-toast"
+import { useRouter } from 'next/navigation'
 
 
 enum ProductStatus {
@@ -173,6 +174,7 @@ export default function AddProduct() {
   const [selectedStatus, setSelectedStatus] = useState<ProductStatus>(
     ProductStatus.DRAFT
   )
+  const router = useRouter()
 
   const createProduct = useAdminCreateProduct()
   const uploadFile = useAdminUploadFile()
@@ -238,7 +240,7 @@ export default function AddProduct() {
         console.log(product.id)
         setFormData(initialFormData)
         console.log("Uploaded Products!")
-      },
+        router.push(`/dashboard/products/edit/digital/${product.id}`);      },
       onError: (error) => {
         console.error("Error creating product:", error)
       },
@@ -249,16 +251,18 @@ export default function AddProduct() {
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
     <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
       <div className="flex items-center gap-4">
-        <Link href="/dashboard/products">
+        <Link href="/dashboard">
           <Button variant="outline" size="icon" className="h-7 w-7">
             <ChevronLeft className="h-4 w-4" />
             <span className="sr-only">Back</span>
           </Button>
         </Link>
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
+          <Link href="/dashboard">
           <Button variant="outline" size="sm">
             Discard
           </Button>
+          </Link>
           <Button size="sm" value="Submit" onClick={handleCreate}>
             Create Product
           </Button>
