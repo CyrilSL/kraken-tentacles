@@ -81,7 +81,6 @@ import { ProductVariantPricesCreateReq } from "@medusajs/medusa/dist/types/produ
 import { useAdminUploadFile } from "medusa-react"
 import { useToast } from "@/components/ui/use-toast"
 
-
 enum ProductStatus {
   DRAFT = "draft",
   PROPOSED = "proposed",
@@ -226,12 +225,12 @@ export default function AddProduct() {
 
     // Proceed with form submission if validation passes
     if (formData.images.length === 0) {
-toast({
+      toast({
         variant: "destructive",
         title: "Image is required",
         description: "At least one image is necessary to add a product",
-      })     
-       return
+      })
+      return
     }
 
     formData.status = selectedStatus
@@ -315,71 +314,72 @@ toast({
                 <Table>
                   <TableHeader>
                     <TableRow>
-                    {/* <TableHead className="w-[100px]">SKU</TableHead> */}
-                          <TableHead>Quantity</TableHead>
-                          <TableHead>Title</TableHead>
-                          <TableHead>Prize</TableHead>
+                      {/* <TableHead className="w-[100px]">SKU</TableHead> */}
+                      <TableHead>Quantity</TableHead>
+                      <TableHead>Title</TableHead>
+                      <TableHead>Prize</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-  {formData.variants.map((variant, index) => (
-    <TableRow key={index}>
-      <TableCell>
-        <Input
-          name={`variants[${index}].inventory_quantity`}
-          type="number"
-          value={variant.inventory_quantity}
-          onChange={(e) =>
-            setFormData((prevData) => {
-              const updatedVariants = [...prevData.variants];
-              updatedVariants[index].inventory_quantity = parseInt(e.target.value, 10);
-              return {
-                ...prevData,
-                variants: updatedVariants,
-              };
-            })
-          }
-        />
-      </TableCell>
-      <TableCell>
-        <Input
-          name={`variants[${index}].title`}
-          value={variant.title}
-          onChange={(e) =>
-            setFormData((prevData) => {
-              const updatedVariants = [...prevData.variants];
-              updatedVariants[index].title = e.target.value;
-              return {
-                ...prevData,
-                variants: updatedVariants,
-              };
-            })
-          }
-        />
-      </TableCell>
-      <TableCell>
-        <Input
-          name={`variants[${index}].prices[0].amount`}
-          type="number"
-          value={variant.prices[0]?.amount || ""}
-          onChange={(e) =>
-            setFormData((prevData) => {
-              const updatedVariants = [...prevData.variants];
-              updatedVariants[index].prices[0] = {
-                amount: parseFloat(e.target.value),
-                currency_code: "USD", // You can change this as needed
-              };
-              return {
-                ...prevData,
-                variants: updatedVariants,
-              };
-            })
-          }
-        />
-      </TableCell>
-    </TableRow>
-  ))}
-</TableBody>
+                    {formData.variants.map((variant, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <Input
+                            name={`variants[${index}].inventory_quantity`}
+                            type="number"
+                            value={variant.inventory_quantity}
+                            onChange={(e) =>
+                              setFormData((prevData) => {
+                                const updatedVariants = [...prevData.variants]
+                                updatedVariants[index].inventory_quantity =
+                                  parseInt(e.target.value, 10)
+                                return {
+                                  ...prevData,
+                                  variants: updatedVariants,
+                                }
+                              })
+                            }
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Input
+                            name={`variants[${index}].title`}
+                            value={variant.title}
+                            onChange={(e) =>
+                              setFormData((prevData) => {
+                                const updatedVariants = [...prevData.variants]
+                                updatedVariants[index].title = e.target.value
+                                return {
+                                  ...prevData,
+                                  variants: updatedVariants,
+                                }
+                              })
+                            }
+                          />
+                        </TableCell>
+                        <TableCell>
+                          <Input
+                            name={`variants[${index}].prices[0].amount`}
+                            type="number"
+                            value={variant.prices[0]?.amount || ""}
+                            onChange={(e) =>
+                              setFormData((prevData) => {
+                                const updatedVariants = [...prevData.variants]
+                                updatedVariants[index].prices[0] = {
+                                  amount: parseFloat(e.target.value),
+                                  currency_code: "USD", // You can change this as needed
+                                }
+                                return {
+                                  ...prevData,
+                                  variants: updatedVariants,
+                                }
+                              })
+                            }
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
                 </Table>
               </CardContent>
               <CardFooter className="justify-center border-t p-4">

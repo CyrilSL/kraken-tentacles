@@ -110,10 +110,12 @@ type CreateProductData = {
   }[]
   sales_channels: ProductSalesChannelReq[]
   categories: ProductProductCategoryReq[]
-  // options: ProductOption[]
+  options: {
+    title: string;
+  }[];
   variants: {
     title: string
-    inventory_quantity: number
+    // inventory_quantity: number
     prices: {
       amount: number
       currency_code: string
@@ -152,16 +154,30 @@ const initialFormData: CreateProductData = {
 
   sales_channels: [],
   categories: [],
-  // options: [],
-  variants: [],
-  // weight: 0,
-  // length: 0,
-  // height: 0,
-  // width: 0,
+  options: [
+    {
+      title: "Type",
+    },
+  ],
+  variants: [
+    {
+      title: "",
+      prices: [
+        {
+          amount: 108,
+          currency_code: "usd",
+        },
+      ],
+      options: [
+        {
+          value: "",
+        },
+      ],
+    },
+  ],
   hs_code: "",
   origin_country: "",
   mid_code: "",
-  // material: "",
   metadata: {},
 }
 
