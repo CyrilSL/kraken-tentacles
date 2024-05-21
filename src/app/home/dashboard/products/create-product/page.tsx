@@ -100,39 +100,20 @@ type CreateProductData = {
   thumbnail: string
   handle: string
   status: ProductStatus // You need to define ProductStatus type
-  // type: {
-  //   value:string,
-  //   id:string,
-  // }; // You need to define ProductType type
-  // collection_id: string;
   tags: {
     value: string
   }[]
   sales_channels: ProductSalesChannelReq[]
   categories: ProductProductCategoryReq[]
-  options: {
-    title: string;
-  }[];
+
   variants: {
-    title: string
-    // inventory_quantity: number
+    title:string
     prices: {
       amount: number
       currency_code: string
     }[]
-    options: {
-      value: string
-    }[]
+    
   }[]
-  // weight: number;
-  // length: number;
-  // height: number;
-  // width: number;
-  hs_code: string
-  origin_country: string
-  mid_code: string
-  // material: string;
-  metadata: Record<string, unknown>
 }
 
 const initialFormData: CreateProductData = {
@@ -145,40 +126,21 @@ const initialFormData: CreateProductData = {
   thumbnail: "",
   handle: "",
   status: ProductStatus.DRAFT,
-  // type: {
-  //   value: "",
-  //   id: "",
-  // },
-  // collection_id: "",
   tags: [],
-
   sales_channels: [],
   categories: [],
-  options: [
-    {
-      title: "Type",
-    },
-  ],
+
   variants: [
     {
-      title: "",
+    title:"One",
       prices: [
         {
           amount: 108,
           currency_code: "usd",
         },
       ],
-      options: [
-        {
-          value: "",
-        },
-      ],
     },
   ],
-  hs_code: "",
-  origin_country: "",
-  mid_code: "",
-  metadata: {},
 }
 
 export default function AddProduct() {
@@ -238,30 +200,38 @@ export default function AddProduct() {
         variant: "destructive",
         title: "Title is required",
         description: "Title field is necessary to add a product",
-      })
-      return // Prevent submission if validation fails
+      });
+      return; // Prevent submission if validation fails
     }
-
-    handleFileUpload()
-
-    console.log(formData)
-    console.log(formData.images.length)
-
-    
-
-    formData.status = selectedStatus
-
+  
+    handleFileUpload();
+  
+    // Check if variants array is defined and has at least one variant with a title
+    if (!formData.variants || formData.variants.length === 0 || !formData.variants[0].title) {
+      toast({
+        variant: "destructive",
+        title: "Invalid variant data",
+        description: "Please provide at least one variant with a title",
+      });
+      return; // Prevent submission if variants data is invalid
+    }
+  
+    console.log("formData.variants:", formData.variants);
+  
+    formData.status = selectedStatus;
+  
     createProduct.mutate(formData, {
       onSuccess: ({ product }) => {
-        console.log(product.id)
-        setFormData(initialFormData)
-        console.log("Uploaded Products!")
-        router.push(`/dashboard/products/edit/digital/${product.id}`);      },
-      onError: (error) => {
-        console.error("Error creating product:", error)
+        console.log(product.id);
+        setFormData(initialFormData);
+        console.log("Uploaded Products!");
+        router.push(`/dashboard/products/edit/digital/${product.id}`);
       },
-    })
-  }
+      onError: (error) => {
+        console.error("Error creating product:", error);
+      },
+    });
+  };
   console.log("Selected Status ", selectedStatus)
   return (
     <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">

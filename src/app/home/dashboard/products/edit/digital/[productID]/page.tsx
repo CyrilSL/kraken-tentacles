@@ -3,10 +3,22 @@ import React, { useState } from "react"
 import { useAdminProduct } from "medusa-react"
 import { useAdminUpdateProduct } from "medusa-react"
 import { useAdminUploadFile } from "medusa-react"
-
+import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft } from "lucide-react"
+import { ChevronLeft, Upload } from "lucide-react"
 
+import { CardDescription, CardFooter } from "@/components/ui/card"
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
+
+import { PlusCircle } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -22,14 +34,14 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import ProductImageUpload from "./components/ProductImage"
 import ProductPriceVariant from "./components/ProductPriceVariant"
-//import ProductPrice from "./components/ProductPrice"
+
+import PriceCard from "./components/PriceCard"
 import UpdateDigitalMedia from "./components/ProductDigitalUpload"
 import ProductDetails from "./components/ProductDetails"
 
 export default function Page({ params }: { params: { productID: string } }) {
   const { product, isLoading } = useAdminProduct(params.productID)
-  console.log(product?.variants)
-  console.log("Product : ", product)
+
   const [selectedFile, setSelectedFile] = useState<File | null>(null)
   const uploadFile = useAdminUploadFile()
   const [uploadStatus, setUploadStatus] = useState<boolean | null>(null)
@@ -39,45 +51,77 @@ export default function Page({ params }: { params: { productID: string } }) {
   const [updatedDescription, setUpdatedDescription] = useState(
     product?.description || ""
   )
-
+  const [updatedPrice, setUpdatedPrice] = useState<number>(
+    product?.variants?.[0]?.prices?.[0]?.amount || 0
+  )
+  const [uploadedFileKey, setUploadedFileKey] = useState<string | null>(null)
   const updateProduct = useAdminUpdateProduct(params.productID)
 
   const variantPrice = product?.variants?.[0]?.prices?.[0]?.amount
+
+  //console.log(product)
 
   const handleFileSelect = (file: File) => {
     console.log(file)
     setSelectedFile(file)
   }
 
-  const handleFileUpload = () => {}
-
   const handleProductUpdate = (title: string, description: string) => {
     setUpdatedTitle(title)
     setUpdatedDescription(description)
   }
 
-  const handleUpdate = () => {
+  const handleSubmit = async () => {
+    if (!updatedTitle || !updatedDescription || !updatedPrice) {
+      alert("Please fill in all required fields.")
+      return
+    }
+
+    // Wait for file upload to finish
+    let uploadedFileUrl: string | null = null
+    if (selectedFile) {
+      const uploadResult = await uploadFile.mutateAsync(selectedFile)
+      const fileUrl = uploadResult.uploads[0].url
+      uploadedFileUrl = fileUrl
+      setUploadStatus(true)
+    }
+
+    console.log("Uploaded Image URL:", uploadedFileUrl)
+
     updateProduct.mutate(
       {
         title: updatedTitle,
         description: updatedDescription,
+        thumbnail: uploadedFileUrl || "",
+        images: uploadedFileUrl ? [uploadedFileUrl] : [],
+        variants: [
+          {
+            title: "Digital",
+            inventory_quantity: 90,
+            prices: [{ amount: updatedPrice, currency_code: "usd" }],
+          },
+        ],
       },
       {
         onSuccess: ({ product }) => {
           console.log(product.id)
-          // Update the product state with the updated data if needed
-          // setProduct(product);
+          // Handle success case here
+        },
+        onError: (error) => {
+          console.error(error) // Log errors for debugging
         },
       }
     )
   }
+  if (isLoading) {
+    return <span>Loading...</span>
+  }
 
+  console.log(product)
   return (
     <div>
-      {/* {isLoading && <span>Loading...</span>} */}
-
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-        <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-max gap-4">
+        <div className="mx-auto grid max-w-[59rem] flex-1 auto-rows-m ax gap-4">
           <div className="flex items-center gap-4">
             <Link href="/dashboard/products">
               <Button variant="outline" size="icon" className="h-7 w-7">
@@ -95,7 +139,7 @@ export default function Page({ params }: { params: { productID: string } }) {
               <Button variant="outline" size="sm">
                 Discard
               </Button>
-              <Button size="sm" onClick={handleUpdate}>
+              <Button size="sm" onClick={handleSubmit}>
                 Save Product
               </Button>
             </div>
@@ -106,58 +150,12 @@ export default function Page({ params }: { params: { productID: string } }) {
                 product={product}
                 onUpdate={handleProductUpdate}
               />
+              <PriceCard
+                initialPrice={product?.variants?.[0]?.prices?.[0]?.amount || 0}
+                onPriceUpdate={(price) => setUpdatedPrice(price)}
+              />
 
-              <ProductPriceVariant price={variantPrice} />
               <UpdateDigitalMedia productId={params.productID} />
-              <Card x-chunk="dashboard-07-chunk-2">
-                <CardHeader>
-                  <CardTitle>Product Category</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid gap-6 sm:grid-cols-3">
-                    <div className="grid gap-3">
-                      <Label htmlFor="category">Category</Label>
-                      <Select>
-                        <SelectTrigger
-                          id="category"
-                          aria-label="Select category"
-                        >
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="clothing">Clothing</SelectItem>
-                          <SelectItem value="electronics">
-                            Electronics
-                          </SelectItem>
-                          <SelectItem value="accessories">
-                            Accessories
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div className="grid gap-3">
-                      <Label htmlFor="subcategory">
-                        Subcategory (optional)
-                      </Label>
-                      <Select>
-                        <SelectTrigger
-                          id="subcategory"
-                          aria-label="Select subcategory"
-                        >
-                          <SelectValue placeholder="Select subcategory" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="t-shirts">T-Shirts</SelectItem>
-                          <SelectItem value="hoodies">Hoodies</SelectItem>
-                          <SelectItem value="sweatshirts">
-                            Sweatshirts
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
             <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
               <Card x-chunk="dashboard-07-chunk-3">
@@ -183,7 +181,54 @@ export default function Page({ params }: { params: { productID: string } }) {
                 </CardContent>
               </Card>
 
-              <ProductImageUpload thumbnail={product?.thumbnail || null} />
+              <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
+                <CardHeader>
+                  <CardTitle>Product Images</CardTitle>
+                  {/* <CardDescription>
+                      Lipsum dolor sit amet, consectetur adipiscing elit
+                    </CardDescription> */}
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-2">
+                    <Image
+                      alt="Product image"
+                      className="aspect-square w-full rounded-md object-cover"
+                      height="300"
+                      src={
+                        product?.thumbnail && product.thumbnail !== ""
+                          ? product.thumbnail
+                          : selectedFile
+                          ? URL.createObjectURL(selectedFile)
+                          : "/placeholder.svg"
+                      }
+                      width="300"
+                    />
+                    <div className="grid grid-cols-3 gap-2">
+                      <label
+                        htmlFor="file-upload"
+                        className="flex aspect-square w-full cursor-pointer items-center justify-center rounded-md border border-dashed"
+                      >
+                        <Upload className="h-4 w-4 text-muted-foreground" />
+                        <span className="sr-only">Upload</span>
+                      </label>
+                    </div>
+                  </div>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    multiple
+                    onChange={(e) => {
+                      const file = e.target.files && e.target.files[0]
+                      if (file) {
+                        handleFileSelect(file)
+                      }
+                    }}
+                    className="hidden"
+                  />
+                </CardContent>
+              </Card>
+
+              {/* <ProductImageUpload thumbnail={product?.thumbnail || null} /> */}
               <Card x-chunk="dashboard-07-chunk-5">
                 <CardHeader>
                   <CardTitle>Archive Product</CardTitle>
@@ -204,7 +249,7 @@ export default function Page({ params }: { params: { productID: string } }) {
             <Button variant="outline" size="sm">
               Discard
             </Button>
-            <Button size="sm" onClick={handleUpdate}>
+            <Button size="sm" onClick={handleSubmit}>
               Save Product
             </Button>
           </div>

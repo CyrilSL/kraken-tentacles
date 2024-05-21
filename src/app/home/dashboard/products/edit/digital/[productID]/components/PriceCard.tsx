@@ -1,4 +1,3 @@
-import { PlusCircle } from "lucide-react";
 import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -20,31 +19,28 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-interface ProductPriceVariantProps {
-  price: number | undefined;
+import { PlusCircle } from "lucide-react";
+
+interface PriceCardProps {
+  initialPrice: number;
   onPriceUpdate: (price: number) => void;
 }
 
-export default function ProductPriceVariant({
-  price,
-  onPriceUpdate,
-}: ProductPriceVariantProps) {
-  const [updatedPrice, setUpdatedPrice] = useState<number | undefined>(price);
+const PriceCard: React.FC<PriceCardProps> = ({ initialPrice, onPriceUpdate }) => {
+  const [updatedPrice, setUpdatedPrice] = useState<number>(initialPrice);
 
-   const handlePriceUpdate = (e) => {
-    setUpdatedPrice(parseFloat(e.target.value));
+  const handlePriceUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPrice = parseFloat(e.target.value);
+    setUpdatedPrice(newPrice);
+    onPriceUpdate(newPrice);
   };
-
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Price</CardTitle>
-        <CardDescription>
-          Lipsum dolor sit amet, consectetur adipiscing elit
-        </CardDescription>
+        <CardDescription>Lipsum dolor sit amet, consectetur adipiscing elit</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -54,11 +50,7 @@ export default function ProductPriceVariant({
                 <Label htmlFor="price-2" className="sr-only">
                   Price
                 </Label>
-                <Input
-                  id="price-2"
-                  value={updatedPrice?.toString() || ""}
-                  onChange={handlePriceUpdate}
-                />
+                <Input id="price-2" value={updatedPrice?.toString() || ""} onChange={handlePriceUpdate} />
               </TableCell>
             </TableRow>
             <TableRow></TableRow>
@@ -73,4 +65,6 @@ export default function ProductPriceVariant({
       </CardFooter>
     </Card>
   );
-}
+};
+
+export default PriceCard;
