@@ -42,10 +42,10 @@ export const HowItWorks = () => {
     >
       <h2 className="text-3xl md:text-4xl font-bold ">
         How It{" "}
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+        <span className="bg-gradient-to-b from-primary/60 to-primary bg-clip-text">
           Works{" "}
         </span>
-        Step-by-Step Guide
+        {/* Step-by-Step Guide */}
       </h2>
       <p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
@@ -56,7 +56,7 @@ export const HowItWorks = () => {
         {features.map(({ icon, title, description }: FeatureProps) => (
           <Card
             key={title}
-            className="bg-muted/50"
+            className="bg-white shadow-lg"
           >
             <CardHeader>
               <CardTitle className="grid gap-4 place-items-center">

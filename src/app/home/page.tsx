@@ -8,6 +8,8 @@ import { HowItWorks } from "@/components/HowItWorks"
 //import { Hero } from "@/components/Hero";
 import { Hero } from "@/components/Hero"
 //import './App.css'
+import { Pricing } from "@/components/Pricing"
+
 export default function page() {
   return (
     <>
@@ -27,6 +29,8 @@ export default function page() {
         </button>
       </Link> */}
       <HowItWorks />
+      {/* <Pricing /> */}
+      <Pricing />
     </div>
     
     </>
