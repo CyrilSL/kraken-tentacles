@@ -7,6 +7,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, Upload } from "lucide-react"
 
+import {
+  ProductProductCategoryReq,
+  ProductSalesChannelReq,
+  ProductTypeReq,
+} from "@medusajs/medusa/dist/types/product"
 import { CardDescription, CardFooter } from "@/components/ui/card"
 
 import {
@@ -39,6 +44,38 @@ import PriceCard from "./components/PriceCard"
 import UpdateDigitalMedia from "./components/ProductDigitalUpload"
 import ProductDetails from "./components/ProductDetails"
 
+enum ProductStatus {
+  DRAFT = "draft",
+  PROPOSED = "proposed",
+  PUBLISHED = "published",
+  REJECTED = "rejected",
+}
+
+type CreateProductData = {
+  title: string
+  is_giftcard: boolean
+  discountable: boolean
+  subtitle?: string
+  description?: string
+  images: string[]
+  thumbnail: string
+  handle: string
+  status: ProductStatus // You need to define ProductStatus type
+  tags: {
+    value: string
+  }[]
+  sales_channels: ProductSalesChannelReq[]
+  categories: ProductProductCategoryReq[]
+
+  variants: {
+    title: string
+    prices: {
+      amount: number
+      currency_code: string
+    }[]
+  }[]
+}
+
 export default function Page({ params }: { params: { productID: string } }) {
   const { product, isLoading } = useAdminProduct(params.productID)
 
@@ -51,15 +88,41 @@ export default function Page({ params }: { params: { productID: string } }) {
   const [updatedDescription, setUpdatedDescription] = useState(
     product?.description || ""
   )
+
   const [updatedPrice, setUpdatedPrice] = useState<number>(
     product?.variants?.[0]?.prices?.[0]?.amount || 0
   )
   const [uploadedFileKey, setUploadedFileKey] = useState<string | null>(null)
   const updateProduct = useAdminUpdateProduct(params.productID)
+  let formData: CreateProductData | undefined;
+
+  if (product) {
+    formData = {
+      title: product.title,
+      is_giftcard: product.is_giftcard,
+      discountable: product.discountable,
+      subtitle: product.subtitle ?? "",
+      description: product.description ?? "",
+      images: product.images.map(image => image.url) || [],
+      thumbnail: product.thumbnail ?? "",
+      handle: product.handle ?? "",
+      status: product.status as ProductStatus,
+      tags: product.tags.map((tag) => ({ value: String(tag) })),
+      sales_channels: product.sales_channels,
+      categories: product.categories || [],
+      variants: product.variants.map((variant) => ({
+        title: variant.title,
+        prices: variant.prices.map((price) => ({
+          amount: price.amount,
+          currency_code: price.currency_code,
+        })),
+      })),
+    }
+  }
 
   const variantPrice = product?.variants?.[0]?.prices?.[0]?.amount
 
-  //console.log(product)
+  console.log("Form Data : ",formData)
 
   const handleFileSelect = (file: File) => {
     console.log(file)
@@ -117,7 +180,7 @@ export default function Page({ params }: { params: { productID: string } }) {
     return <span>Loading...</span>
   }
 
-  console.log(product)
+  // console.log(product)
   return (
     <div>
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">

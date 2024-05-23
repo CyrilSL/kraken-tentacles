@@ -57,4 +57,4 @@ dump.rdb
 /playwright/.auth
 
 bun.lockb
-
+pnpm-lock.yaml

@@ -12,8 +12,11 @@ export default function Layout({ children }) {
       baseUrl={process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000'}
     >
       <div>
+        
         {children}
       </div>
     </MedusaProvider>
   )
+
 }
+
