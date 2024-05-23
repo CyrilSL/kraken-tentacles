@@ -73,7 +73,7 @@ export const Navbar = () => {
                 </Menu>
               </SheetTrigger>
 
-              <SheetContent side={"left"}>
+              <SheetContent side={"right"}>
                 <SheetHeader>
                   <SheetTitle className="font-bold text-xl">
                     Menu
