@@ -15,6 +15,13 @@ module.exports = {
   ],
   theme: {
     extend: {
+      container: {
+        center: true,
+        padding: "1.5rem",
+        screens: {
+          "2xl": "1400px",
+        },
+      },  
       transitionProperty: {
         width: "width margin",
         height: "height",
@@ -24,6 +31,7 @@ module.exports = {
         padding: "padding-top padding-right padding-bottom padding-left",
       },
       colors: {
+        
         grey: {
           0: "#FFFFFF",
           5: "#F9FAFB",

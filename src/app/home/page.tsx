@@ -9,6 +9,7 @@ import { HowItWorks } from "@/components/HowItWorks"
 import { Hero } from "@/components/Hero"
 //import './App.css'
 import { Pricing } from "@/components/Pricing"
+import { FAQ } from "@/components/FAQ"
 
 export default function page() {
   return (
@@ -31,6 +32,7 @@ export default function page() {
       <HowItWorks />
       {/* <Pricing /> */}
       <Pricing />
+      <FAQ />
     </div>
     
     </>

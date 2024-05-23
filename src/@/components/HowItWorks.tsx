@@ -16,13 +16,13 @@ const features: FeatureProps[] = [
   },
   {
     icon: <MapIcon />,
-    title: "Community",
+    title: "Store",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
   },
   {
     icon: <PlaneIcon />,
-    title: "Scalability",
+    title: "Grow",
     description:
       "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
   },
