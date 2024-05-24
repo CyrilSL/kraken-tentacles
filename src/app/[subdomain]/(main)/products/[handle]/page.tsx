@@ -11,7 +11,7 @@ import {
 import { Region } from "@medusajs/medusa"
 import ProductTemplate from "@modules/products/templates"
 
-type Props = {
+type Props = {getRegion,
   params: { countryCode: string; handle: string }
 }
 
