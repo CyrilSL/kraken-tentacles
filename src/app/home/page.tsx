@@ -16,7 +16,7 @@ export default function page() {
     <>
     <Navbar />
     
-    <div className="relative flex flex-col  h-[100vh] items-center  bg-zinc-50 dark:bg-zinc-900  text-slate-950 transition-bg">
+    <div className="relative flex flex-col items-center  bg-zinc-50 dark:bg-zinc-900  text-slate-950 transition-bg">
     <Hero />  
       {/* <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
         Kraken Store!

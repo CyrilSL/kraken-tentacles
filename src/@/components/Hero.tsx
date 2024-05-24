@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const Hero = () => {
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center h-[100vh] py-20">
+    <section className="container grid lg:grid-cols-2 place-items-center py-20">
       <div className="text-left lg:text-left space-y-6 lg:justify-self-center">
         <div className="text-3xl md:text-7xl font-bold dark:text-white">
           Go 0 to 1 at an insane pace!
