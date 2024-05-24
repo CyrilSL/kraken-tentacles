@@ -7,14 +7,14 @@ import ProductPreview from "../product-preview"
 
 type RelatedProductsProps = {
   product: PricedProduct
-  countryCode: string
+//  countryCode: string
 }
 
 export default async function RelatedProducts({
   product,
-  countryCode,
+
 }: RelatedProductsProps) {
-  const region = await getRegion(countryCode)
+  const region = 'us'
 
   if (!region) {
     return null
@@ -24,13 +24,6 @@ export default async function RelatedProducts({
   const setQueryParams = (): StoreGetProductsParams => {
     const params: StoreGetProductsParams = {}
 
-    if (region?.id) {
-      params.region_id = region.id
-    }
-
-    if (region?.currency_code) {
-      params.currency_code = region.currency_code
-    }
 
     if (product.collection_id) {
       params.collection_id = [product.collection_id]
@@ -49,7 +42,6 @@ export default async function RelatedProducts({
 
   const productPreviews = await getProductsList({
     queryParams,
-    countryCode,
   }).then(({ response }) =>
     response.products.filter(
       (productPreview) => productPreview.id !== product.id
@@ -74,7 +66,7 @@ export default async function RelatedProducts({
       <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
         {productPreviews.map((productPreview) => (
           <li key={productPreview.id}>
-            <ProductPreview region={region} productPreview={productPreview} />
+            <ProductPreview productPreview={productPreview} />
           </li>
         ))}
       </ul>

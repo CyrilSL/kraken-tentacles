@@ -6,7 +6,7 @@ import CartButton from "@modules/layout/components/cart-button"
 import SideMenu from "@modules/layout/components/side-menu"
 
 import { getValidSubdomain } from "@lib/util/subdomain"
-//import { fetchStoreDetails } from "@lib/util/fetch-store-details"
+import { fetchStoreDetails } from "@lib/util/fetch-store-details"
 
 
 
@@ -15,7 +15,7 @@ export default async function Nav({ subdomain }) {
 
   const regions = await listRegions().then((regions) => regions)
 
-  //const storeDetails = await fetchStoreDetails(subdomain);
+  const storeDetails = await fetchStoreDetails(subdomain);
   //const storeName = storeDetails.store?.name || "Store not found";
   const storeName = "Store not found";
   
@@ -36,7 +36,8 @@ export default async function Nav({ subdomain }) {
               data-testid="nav-store-link"
             >
                    {/* Display store name from API or "Loading..." or "Error" */}
-                   {storeName}
+                   {(storeDetails?.store?.name || 'Default Store Name')}
+
             </Link>
           </div>
 
