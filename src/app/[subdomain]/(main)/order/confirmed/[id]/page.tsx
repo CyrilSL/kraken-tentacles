@@ -1,30 +1,19 @@
-import { Metadata } from "next"
-
-import { retrieveOrder } from "@lib/data"
-import { LineItem, Order } from "@medusajs/medusa"
-import { enrichLineItems } from "@modules/cart/actions"
+import medusaRequest from "@lib/medusa-fetch"
 import OrderCompletedTemplate from "@modules/order/templates/order-completed-template"
-import { notFound } from "next/navigation"
+import { Metadata } from "next"
 
 type Props = {
   params: { id: string }
 }
 
 async function getOrder(id: string) {
-  const order = await retrieveOrder(id)
+  const res = await medusaRequest("GET", `/orders/${id}`)
 
-  if (!order) {
-    return notFound()
+  if (!res.ok) {
+    throw new Error(`Failed to fetch order: ${id}`)
   }
 
-  const enrichedItems = await enrichLineItems(order.items, order.region_id)
-
-  return {
-    order: {
-      ...order,
-      items: enrichedItems as LineItem[],
-    } as Order,
-  }
+  return res.body
 }
 
 export const metadata: Metadata = {
@@ -32,7 +21,7 @@ export const metadata: Metadata = {
   description: "You purchase was successful",
 }
 
-export default async function OrderConfirmedPage({ params }: Props) {
+export default async function CollectionPage({ params }: Props) {
   const { order } = await getOrder(params.id)
 
   return <OrderCompletedTemplate order={order} />

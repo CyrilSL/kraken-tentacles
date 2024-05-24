@@ -1,5 +1,5 @@
 import { Button, Heading, Text } from "@medusajs/ui"
-import Link from 'next/link'
+import Link from "next/link"
 
 const SignInPrompt = () => {
   return (
@@ -13,8 +13,8 @@ const SignInPrompt = () => {
         </Text>
       </div>
       <div>
-        <Link href="/account">
-          <Button variant="secondary" className="h-10" data-testid="sign-in-button">
+        <Link href="/account/login">
+          <Button variant="secondary" className="h-10">
             Sign in
           </Button>
         </Link>

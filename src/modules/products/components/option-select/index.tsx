@@ -1,16 +1,13 @@
-import { ProductOption } from "@medusajs/medusa"
-import { clx } from "@medusajs/ui"
-import React from "react"
-
 import { onlyUnique } from "@lib/util/only-unique"
+import { ProductOption } from "@medusajs/medusa"
+import clsx from "clsx"
+import React from "react"
 
 type OptionSelectProps = {
   option: ProductOption
   current: string
   updateOption: (option: Record<string, string>) => void
   title: string
-  disabled: boolean
-  "data-testid"?: string
 }
 
 const OptionSelect: React.FC<OptionSelectProps> = ({
@@ -18,24 +15,19 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
   current,
   updateOption,
   title,
-  "data-testid": dataTestId,
-  disabled,
 }) => {
   const filteredOptions = option.values.map((v) => v.value).filter(onlyUnique)
 
   return (
     <div className="flex flex-col gap-y-3">
       <span className="text-sm">Select {title}</span>
-      <div
-        className="flex flex-wrap justify-between gap-2"
-        data-testid={dataTestId}
-      >
+      <div className="flex flex-wrap justify-between gap-2">
         {filteredOptions.map((v) => {
           return (
             <button
               onClick={() => updateOption({ [option.id]: v })}
               key={v}
-              className={clx(
+              className={clsx(
                 "border-ui-border-base bg-ui-bg-subtle border text-small-regular h-10 rounded-rounded p-2 flex-1 ",
                 {
                   "border-ui-border-interactive": v === current,
@@ -43,8 +35,6 @@ const OptionSelect: React.FC<OptionSelectProps> = ({
                     v !== current,
                 }
               )}
-              disabled={disabled}
-              data-testid="option-button"
             >
               {v}
             </button>
