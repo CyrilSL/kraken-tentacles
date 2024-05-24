@@ -1,31 +1,33 @@
-import { Suspense } from "react"
+"use client"
 
-import { listRegions } from "@lib/data"
-import Link from 'next/link'
-import CartButton from "@modules/layout/components/cart-button"
+import { useMobileMenu } from "@lib/context/mobile-menu-context"
+import useToggleState from "@lib/hooks/use-toggle-state"
+import Hamburger from "@modules/common/components/hamburger"
+import CartDropdown from "@modules/layout/components/cart-dropdown"
+import DropdownMenu from "@modules/layout/components/dropdown-menu"
 import SideMenu from "@modules/layout/components/side-menu"
+import MobileMenu from "@modules/mobile-menu/templates"
+import DesktopSearchModal from "@modules/search/templates/desktop-search-modal"
+import Link from "next/link"
 
-import { getValidSubdomain } from "@lib/util/subdomain"
-import { fetchStoreDetails } from "@lib/util/fetch-store-details"
+const Nav = () => {
+  const { toggle } = useMobileMenu()
+  const {
+    state: searchModalState,
+    close: searchModalClose,
+    open: searchModalOpen,
+  } = useToggleState()
 
-
-
-export default async function Nav({ subdomain }) {
- // const subdomain = getValidSubdomain() || 'test' // Default to 'Cyril' if subdomain is null
-
-  const regions = await listRegions().then((regions) => regions)
-
-  const storeDetails = await fetchStoreDetails(subdomain);
-  //const storeName = storeDetails.store?.name || "Store not found";
-  const storeName = "Store not found";
-  
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <header className="relative h-16 mx-auto border-b duration-200 bg-white border-ui-border-base">
-        <nav className="content-container txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
+      <header className="relative h-16 px-8 mx-auto border-b duration-200 bg-white border-ui-border-base">
+        <nav className="txt-xsmall-plus text-ui-fg-subtle flex items-center justify-between w-full h-full text-small-regular">
           <div className="flex-1 basis-0 h-full flex items-center">
-            <div className="h-full">
-              <SideMenu regions={regions} />
+            <div className="block small:hidden">
+              <Hamburger setOpen={toggle} />
+            </div>
+            <div className="hidden small:block h-full">
+              <SideMenu searchModalOpen={searchModalOpen} />
             </div>
           </div>
 
@@ -33,50 +35,31 @@ export default async function Nav({ subdomain }) {
             <Link
               href="/"
               className="txt-compact-xlarge-plus hover:text-ui-fg-base uppercase"
-              data-testid="nav-store-link"
             >
-                   {/* Display store name from API or "Loading..." or "Error" */}
-                   {(storeDetails?.store?.name || 'Default Store Name')}
-
+              Medusa Store
             </Link>
           </div>
 
           <div className="flex items-center gap-x-6 h-full flex-1 basis-0 justify-end">
             <div className="hidden small:flex items-center gap-x-6 h-full">
               {process.env.FEATURE_SEARCH_ENABLED && (
-                <Link
-                  className="hover:text-ui-fg-base"
-                  href="/search"
-                  scroll={false}
-                  data-testid="nav-search-link"
-                >
-                  Search
-                </Link>
+                <DesktopSearchModal
+                  state={searchModalState}
+                  close={searchModalClose}
+                  open={searchModalOpen}
+                />
               )}
-              <Link
-                className="hover:text-ui-fg-base"
-                href="/account"
-                data-testid="nav-account-link"
-              >
+              <Link className="hover:text-ui-fg-base" href="/account">
                 Account
               </Link>
             </div>
-            <Suspense
-              fallback={
-                <Link
-                  className="hover:text-ui-fg-base flex gap-2"
-                  href="/cart"
-                  data-testid="nav-cart-link"
-                >
-                  Cart (0)
-                </Link>
-              }
-            >
-              <CartButton />
-            </Suspense>
+            <CartDropdown />
           </div>
         </nav>
+        <MobileMenu />
       </header>
     </div>
   )
 }
+
+export default Nav
