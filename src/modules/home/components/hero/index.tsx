@@ -1,6 +1,5 @@
-import { Button, Heading } from "@medusajs/ui"
-import InteractiveLink from "@modules/common/components/interactive-link"
 import { Github } from "@medusajs/icons"
+import { Button, Heading } from "@medusajs/ui"
 
 const Hero = () => {
   return (
@@ -11,13 +10,13 @@ const Hero = () => {
             level="h1"
             className="text-3xl leading-10 text-ui-fg-base font-normal"
           >
-            Ecommerce Starter Template
+            Welcome to your new store!
           </Heading>
           <Heading
             level="h2"
             className="text-3xl leading-10 text-ui-fg-subtle font-normal"
           >
-            Powered by Medusa and Next.js
+            Coming soon!
           </Heading>
         </span>
         <a
@@ -25,7 +24,7 @@ const Hero = () => {
           target="_blank"
         >
           <Button variant="secondary">
-            View on GitHub
+            Powered by Haloweave!
             <Github />
           </Button>
         </a>

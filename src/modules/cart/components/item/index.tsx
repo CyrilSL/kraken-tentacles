@@ -1,13 +1,19 @@
-import { useStore } from "@lib/context/store-context"
+"use client"
+
 import { LineItem, Region } from "@medusajs/medusa"
 import { Table, Text, clx } from "@medusajs/ui"
+
+import CartItemSelect from "@modules/cart/components/cart-item-select"
+import DeleteButton from "@modules/common/components/delete-button"
 import LineItemOptions from "@modules/common/components/line-item-options"
 import LineItemPrice from "@modules/common/components/line-item-price"
 import LineItemUnitPrice from "@modules/common/components/line-item-unit-price"
-import CartItemSelect from "@modules/cart/components/cart-item-select"
-import Trash from "@modules/common/icons/trash"
 import Thumbnail from "@modules/products/components/thumbnail"
-import Link from "next/link"
+import { updateLineItem } from "@modules/cart/actions"
+import Spinner from "@modules/common/icons/spinner"
+import { useState } from "react"
+import ErrorMessage from "@modules/checkout/components/error-message"
+import Link from 'next/link'
 
 type ItemProps = {
   item: Omit<LineItem, "beforeInsert">
@@ -16,11 +22,31 @@ type ItemProps = {
 }
 
 const Item = ({ item, region, type = "full" }: ItemProps) => {
-  const { updateItem, deleteItem } = useStore()
+  const [updating, setUpdating] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
   const { handle } = item.variant.product
 
+  const changeQuantity = async (quantity: number) => {
+    setError(null)
+    setUpdating(true)
+
+    const message = await updateLineItem({
+      lineId: item.id,
+      quantity,
+    })
+      .catch((err) => {
+        return err.message
+      })
+      .finally(() => {
+        setUpdating(false)
+      })
+
+    message && setError(message)
+  }
+
   return (
-    <Table.Row className="w-full">
+    <Table.Row className="w-full" data-testid="product-row">
       <Table.Cell className="!pl-0 p-4 w-24">
         <Link
           href={`/products/${handle}`}
@@ -34,49 +60,39 @@ const Item = ({ item, region, type = "full" }: ItemProps) => {
       </Table.Cell>
 
       <Table.Cell className="text-left">
-        <Text className="txt-medium-plus text-ui-fg-base">{item.title}</Text>
-        <LineItemOptions variant={item.variant} />
+        <Text className="txt-medium-plus text-ui-fg-base" data-testid="product-title">{item.title}</Text>
+        <LineItemOptions variant={item.variant} data-testid="product-variant" />
       </Table.Cell>
 
       {type === "full" && (
         <Table.Cell>
-          <div className="flex gap-2">
-            <button
-              className="flex items-center gap-x-"
-              onClick={() => deleteItem(item.id)}
-            >
-              <Trash size={18} />
-            </button>
+          <div className="flex gap-2 items-center w-28">
+            <DeleteButton id={item.id} data-testid="product-delete-button" />
             <CartItemSelect
               value={item.quantity}
-              onChange={(value) =>
-                updateItem({
-                  lineId: item.id,
-                  quantity: parseInt(value.target.value),
-                })
-              }
+              onChange={(value) => changeQuantity(parseInt(value.target.value))}
               className="w-14 h-10 p-4"
+              data-testid="product-select-button"
             >
               {Array.from(
-                [
-                  ...Array(
+                {
+                  length: Math.min(
                     item.variant.inventory_quantity > 0
                       ? item.variant.inventory_quantity
-                      : 10
+                      : 10,
+                    10
                   ),
-                ].keys()
-              )
-                .slice(0, 10)
-                .map((i) => {
-                  const value = i + 1
-                  return (
-                    <option value={value} key={i}>
-                      {value}
-                    </option>
-                  )
-                })}
+                },
+                (_, i) => (
+                  <option value={i + 1} key={i}>
+                    {i + 1}
+                  </option>
+                )
+              )}
             </CartItemSelect>
+            {updating && <Spinner />}
           </div>
+          <ErrorMessage error={error} data-testid="product-error-message" />
         </Table.Cell>
       )}
 

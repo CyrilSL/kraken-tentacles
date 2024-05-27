@@ -1,15 +1,18 @@
-import Footer from "@modules/layout/templates/footer"
-import Nav from "@modules/layout/templates/nav"
-import React from "react"
+import React from "react";
+import Footer from "@modules/layout/templates/footer";
+import Nav from "@modules/layout/templates/nav";
 
-const Layout: React.FC = ({ children }) => {
+const Layout: React.FC<{
+  children: React.ReactNode;
+  subdomain?: string;
+}> = ({ children, subdomain }) => {
   return (
     <div>
-      <Nav />
+      <Nav subdomain={subdomain} />
       <main className="relative">{children}</main>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
