@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export type SortFilterItem = {
   title: string;
   slug: string | null;
@@ -36,3 +37,6 @@ export const CHECKOUT_PAGE_PROPS = {
   updatedAt: new Date().toISOString(),
   createdAt: new Date().toISOString()
 };
+=======
+export const IS_BROWSER = typeof window !== "undefined"
+>>>>>>> parent of a005fd2 (store restored, builds locally)
