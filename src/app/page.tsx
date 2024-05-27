@@ -1,7 +1,7 @@
 import React from 'react'
-
-export default function InsideApp() {
+export default function page() {
   return (
-    <div>InsideApp</div>
+    <>
+    </>
   )
 }

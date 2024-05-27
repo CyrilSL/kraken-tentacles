@@ -1,20 +1,12 @@
 import { Order } from "@medusajs/medusa"
 import { Container, Heading, Text } from "@medusajs/ui"
-import { paymentInfoMap } from "@modules/checkout/components/payment"
+import { formatAmount } from "@lib/util/prices"
+
+import { paymentInfoMap } from "@lib/constants"
 import Divider from "@modules/common/components/divider"
-import { formatAmount } from "medusa-react"
 
 type PaymentDetailsProps = {
   order: Order
-}
-
-const currencyCodeSymbolMap: { [key: string]: string } = {
-  USD: "$",
-  EUR: "€",
-  DKK: "kr",
-  GBP: "£",
-  SEK: "kr",
-  NOK: "kr",
 }
 
 const PaymentDetails = ({ order }: PaymentDetailsProps) => {
@@ -31,7 +23,7 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
                 Payment method
               </Text>
-              <Text className="txt-medium text-ui-fg-subtle">
+              <Text className="txt-medium text-ui-fg-subtle" data-testid="payment-method">
                 {paymentInfoMap[payment.provider_id].title}
               </Text>
             </div>
@@ -43,15 +35,14 @@ const PaymentDetails = ({ order }: PaymentDetailsProps) => {
                 <Container className="flex items-center h-7 w-fit p-2 bg-ui-button-neutral-hover">
                   {paymentInfoMap[payment.provider_id].icon}
                 </Container>
-                <Text>
+                <Text data-testid="payment-amount">
                   {payment.provider_id === "stripe" && payment.data.card_last4
                     ? `**** **** **** ${payment.data.card_last4}`
                     : `${formatAmount({
                         amount: payment.amount,
                         region: order.region,
-                      })} paid at ${new Date(
-                        payment.created_at
-                      ).toLocaleString()}`}
+                        includeTaxes: false,
+                      })} paid at ${new Date(payment.created_at).toString()}`}
                 </Text>
               </div>
             </div>
