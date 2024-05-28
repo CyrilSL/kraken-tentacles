@@ -1,85 +1,29 @@
 "use client"
-import React, { useState } from "react"
-import { useAdminProduct } from "medusa-react"
-import { useAdminCreateProduct } from "medusa-react"
-import Image from "next/image"
-import Link from "next/link"
 import {
-  ChevronLeft,
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  PlusCircle,
-  Search,
-  Settings,
-  ShoppingCart,
-  Upload,
-  Users2,
+  ChevronLeft
 } from "lucide-react"
+import { useAdminCreateProduct } from "medusa-react"
+import Link from "next/link"
+import { useState } from "react"
 
-import { Badge } from "@/components/ui/badge"
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
-import { Textarea } from "@/components/ui/textarea"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
 
 import {
   ProductProductCategoryReq,
-  ProductSalesChannelReq,
-  ProductTypeReq,
+  ProductSalesChannelReq
 } from "@medusajs/medusa/dist/types/product"
-import { ProductVariant } from "@medusajs/product"
-import { ProductVariantPricesCreateReq } from "@medusajs/medusa/dist/types/product-variant"
-import { useAdminUploadFile } from "medusa-react"
+
 import { useToast } from "@/components/ui/use-toast"
+import { useAdminUploadFile } from "medusa-react"
 import { useRouter } from 'next/navigation'
 
 
@@ -170,7 +114,7 @@ export default function AddProduct() {
     if (selectedFile) {
       uploadFile.mutate(selectedFile, {
         onSuccess: ({ uploads }) => {
-          const imageUrl = uploads[0].url
+          const imageUrl = uploads[0]?.url || ""
           setFormData((prevData) => ({
             ...prevData,
             images: [...prevData.images, imageUrl],
@@ -207,7 +151,7 @@ export default function AddProduct() {
     handleFileUpload();
   
     // Check if variants array is defined and has at least one variant with a title
-    if (!formData.variants || formData.variants.length === 0 || !formData.variants[0].title) {
+    if (!formData.variants || formData.variants.length === 0 || !formData.variants[0]?.title) {
       toast({
         variant: "destructive",
         title: "Invalid variant data",

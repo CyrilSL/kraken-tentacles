@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { getValidSubdomain } from './lib/util/subdomain';
-
+import { NextResponse } from 'next/server';
+//import { getValidSubdomain } from './lib/util/subdomain';
+import { getValidSubdomain } from 'utils/subdomain';
 // RegExp for public files
 const PUBLIC_FILE = /\.(.*)$/; // Files
 

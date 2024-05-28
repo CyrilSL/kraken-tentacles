@@ -1,7 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
-import React from "react";
+// import { motion } from "framer-motion";
 import LoginForm from "@/components/login";
 export default function Homepage() {
   return (
