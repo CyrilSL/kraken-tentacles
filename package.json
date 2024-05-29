@@ -36,7 +36,7 @@
     "react-dom": "latest",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "tailwindcss-radix": "^3.0.3",
+    "tailwindcss-radix": "^3.0.3"
   },
   "devDependencies": {
     "@radix-ui/react-accordion": "^1.1.2",
