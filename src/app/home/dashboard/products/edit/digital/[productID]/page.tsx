@@ -87,6 +87,9 @@ export default function Page({ params }: { params: { productID: string } }) {
   const updateProduct = useAdminUpdateProduct(params.productID)
   const [formData, setFormData] = useState<CreateProductData | undefined>()
 
+  
+  // console.log("Selected Image : ",selectedFile)
+
   useEffect(() => {
     if (product) {
       setFormData({
@@ -153,10 +156,33 @@ export default function Page({ params }: { params: { productID: string } }) {
       });
     }
   };
-  // const handleProductUpdate = (title: string, description: string) => {
-  //   setUpdatedTitle(title)
-  //   setUpdatedDescription(description)
-  // }
+  
+
+  const handleImageSelected = async (file: File | null) => {
+    setSelectedFile(file);
+  
+    if (file) {
+      const uploadResult = await uploadFile.mutateAsync(file);
+  
+      if (uploadResult && uploadResult.uploads && uploadResult.uploads.length > 0) {
+        const firstUpload = uploadResult.uploads[0];
+  
+        if (firstUpload && firstUpload.url) {
+          if (formData) {
+            setFormData({
+              ...formData,
+              thumbnail: firstUpload.url,
+              images: [...formData.images, firstUpload.url],
+            });
+          }
+        } else {
+          console.log("Handle the case where url is undefined in the first upload");
+        }
+      } else {
+        console.log("Handle the case where uploadResult, uploadResult.uploads, or uploads array is empty");
+      }
+    }
+  };
 
 
 
@@ -166,33 +192,12 @@ export default function Page({ params }: { params: { productID: string } }) {
     //   return
     // }
 
-    
-    let uploadedFileUrl: string | null = null;
-if (selectedFile) {
-  const uploadResult = await uploadFile.mutateAsync(selectedFile);
-  if (uploadResult && uploadResult.uploads && uploadResult.uploads.length > 0) {
-    const firstUpload = uploadResult.uploads[0];
-    if (firstUpload && firstUpload.url) {
-      const fileUrl = firstUpload.url;
-      uploadedFileUrl = fileUrl;
-      setUploadStatus(true);
-    } else {
-      // Handle the case where url is undefined in the first upload
-      console.log("Handle the case where url is undefined in the first upload")
-    }
-  } else {
-    // Handle the case where uploadResult, uploadResult.uploads, or uploads array is 
-    console.log("// Handle the case where uploadResult, uploadResult.uploads, or uploads array is ")
-  }
-}
-    console.log("Uploaded Image URL:", uploadedFileUrl)
-
     updateProduct.mutate(
       {
         title: formData?.title,
         description: formData?.description,
-        thumbnail: uploadedFileUrl || "",
-        images: uploadedFileUrl ? [uploadedFileUrl] : [],
+        thumbnail: formData?.thumbnail,
+        images: formData?.images,
         variants: [
           {
             title: "Digital",
@@ -284,8 +289,11 @@ if (selectedFile) {
   
                 
   
-                <ProductImageUpload thumbnail={product?.thumbnail || null} />
-                <Card x-chunk="dashboard-07-chunk-5">
+                <ProductImageUpload
+        onFileSelected={handleImageSelected}
+        selectedFile={selectedFile}
+        productThumbnail={formData.thumbnail}
+      />                <Card x-chunk="dashboard-07-chunk-5">
                   <CardHeader>
                     <CardTitle>Archive Product</CardTitle>
                     {/* <CardDescription>
