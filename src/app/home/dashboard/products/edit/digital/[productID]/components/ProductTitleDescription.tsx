@@ -5,14 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ProductDetailsProps {
-    product: any;
+    formData: any;
     onUpdate: (title: string, description: string) => void;
   }
   
-  const ProductDetails: React.FC<ProductDetailsProps> = ({ product, onUpdate }) => {
-    const [description, setDescription] = useState(product?.description || "");
-    const [title, setTitle] = useState(product?.title || "");
-  
+  const ProductTitleDescription: React.FC<ProductDetailsProps> = ({ formData, onUpdate }) => {
+    const [description, setDescription] = useState(formData?.description || "");
+    const [title, setTitle] = useState(formData?.title || "");
     const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setTitle(e.target.value);
       onUpdate(e.target.value, description);
@@ -55,4 +54,4 @@ interface ProductDetailsProps {
   );
 };
 
-export default ProductDetails;
+export default ProductTitleDescription;
