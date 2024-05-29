@@ -19,7 +19,17 @@ module.exports = {
         protocol: 'https',
         hostname: 'medusa-server-testing.s3.amazonaws.com',
         pathname: '/**'
-      }
+      },
+            //Old deleted octopus-memory
+            {
+              protocol: "https",
+              hostname: "cpqplhiqiqvfocrrwxmw.supabase.co",
+            },
+            //kraken-memory
+            {
+              protocol: "https",
+              hostname: "stnndvuzdvuokauwugrs.supabase.co",
+            },
     ]
   }
 };
