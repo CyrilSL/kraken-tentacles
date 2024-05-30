@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+
 import {
   Card,
   CardContent,
@@ -9,8 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 import { Input } from "@/components/ui/input";
+
 import { Label } from "@/components/ui/label";
+
 import {
   Table,
   TableBody,
@@ -28,12 +32,14 @@ interface PriceCardProps {
 }
 
 const PriceCard: React.FC<PriceCardProps> = ({ initialPrice, onPriceUpdate }) => {
-  const [updatedPrice, setUpdatedPrice] = useState<number>(initialPrice);
+  const [updatedPrice, setUpdatedPrice] = useState<number>(initialPrice || 0);
 
   const handlePriceUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPrice = parseFloat(e.target.value);
-    setUpdatedPrice(newPrice);
-    onPriceUpdate(newPrice);
+    if (!isNaN(newPrice)) {
+      setUpdatedPrice(newPrice);
+      onPriceUpdate(newPrice);
+    }
   };
 
   return (
@@ -50,7 +56,7 @@ const PriceCard: React.FC<PriceCardProps> = ({ initialPrice, onPriceUpdate }) =>
                 <Label htmlFor="price-2" className="sr-only">
                   Price
                 </Label>
-                <Input id="price-2" value={updatedPrice?.toString() || ""} onChange={handlePriceUpdate} />
+                <Input id="price-2" value={updatedPrice.toString()} onChange={handlePriceUpdate} />
               </TableCell>
             </TableRow>
             <TableRow></TableRow>
