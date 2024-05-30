@@ -82,7 +82,7 @@ export default function Page({ params }: { params: { productID: string } }) {
   const uploadFile = useAdminUploadFile()
   const [uploadStatus, setUploadStatus] = useState<boolean | null>(null)
   const [updatedPrice, setUpdatedPrice] = useState<number>(0);
-
+  const [selectedStatus, setSelectedStatus] = useState<ProductStatus | null>(null);
   const [uploadedFileKey, setUploadedFileKey] = useState<string | null>(null)
   const updateProduct = useAdminUpdateProduct(params.productID)
   const [formData, setFormData] = useState<CreateProductData | undefined>()
@@ -117,11 +117,11 @@ export default function Page({ params }: { params: { productID: string } }) {
   }, [product])
   console.log("Form Data : ",formData)
 
-  useEffect(() => {
-    if (formData?.variants?.[0]?.prices?.[0]?.amount) {
-      setUpdatedPrice(formData.variants[0].prices[0].amount);
-    }
-  }, [formData]);
+  // useEffect(() => {
+  //   if (formData?.variants?.[0]?.prices?.[0]?.amount) {
+  //     setUpdatedPrice(formData.variants[0].prices[0].amount);
+  //   }
+  // }, [formData]);
  
   const handlePriceUpdate = (price: number) => {
     setUpdatedPrice(price);
@@ -157,6 +157,15 @@ export default function Page({ params }: { params: { productID: string } }) {
     }
   };
   
+  const handleStatusChange = (status: ProductStatus) => {
+    setSelectedStatus(status);
+    if (formData) {
+      setFormData({
+        ...formData,
+        status,
+      });
+    }
+  };
 
   const handleImageSelected = async (file: File | null) => {
     setSelectedFile(file);
@@ -198,6 +207,7 @@ export default function Page({ params }: { params: { productID: string } }) {
         description: formData?.description,
         thumbnail: formData?.thumbnail,
         images: formData?.images,
+        status:formData?.status,
         variants: [
           {
             title: "Digital",
@@ -272,23 +282,24 @@ export default function Page({ params }: { params: { productID: string } }) {
                     <div className="grid gap-6">
                       <div className="grid gap-3">
                         <Label htmlFor="status">Status</Label>
-                        <Select>
-                          <SelectTrigger id="status" aria-label="Select status">
-                            <SelectValue placeholder="Select status" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="draft">Draft</SelectItem>
-                            <SelectItem value="published">Active</SelectItem>
-                            <SelectItem value="archived">Archived</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <Select
+  // value={selectedStatus}
+  onValueChange={handleStatusChange}
+>
+  <SelectTrigger id="status" aria-label="Select status">
+    <SelectValue placeholder="Select status" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value={ProductStatus.DRAFT}>Draft</SelectItem>
+    <SelectItem value={ProductStatus.PUBLISHED}>Active</SelectItem>
+    {/* <SelectItem value={ProductStatus.ARCHIVED}>Archived</SelectItem> */}
+  </SelectContent>
+</Select>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-  
-                
-  
+
                 <ProductImageUpload
         onFileSelected={handleImageSelected}
         selectedFile={selectedFile}
