@@ -2,6 +2,7 @@ import { Carousel } from 'components/carousel';
 import { ThreeItemGrid } from 'components/grid/three-items';
 import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
+import ProductGrid from 'components/grid/product-grid';
 
 export const runtime = 'edge';
 
@@ -14,14 +15,18 @@ export const metadata = {
   }
 };
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: { subdomain: string }}) {
+
   return (
     <>
-      <ThreeItemGrid />
+        <ProductGrid subdomain={params.subdomain} /> {/* Pass subdomain as a prop */}
+      {/* <ThreeItemGrid /> */}
+      {params.subdomain}
       <Suspense>
         <Carousel />
         <Suspense>
           <Footer />
+          {params.subdomain}
         </Suspense>
       </Suspense>
     </>
