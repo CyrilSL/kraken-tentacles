@@ -20,7 +20,7 @@ export default async function HomePage({ params }: { params: { subdomain: string
   return (
     <>
         <ProductGrid subdomain={params.subdomain} /> {/* Pass subdomain as a prop */}
-      {/* <ThreeItemGrid /> */}
+      <ThreeItemGrid />
       {params.subdomain}
       <Suspense>
         <Carousel />
