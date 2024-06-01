@@ -1,40 +1,34 @@
+import { Carousel } from 'components/carousel';
+import { ThreeItemGrid } from 'components/grid/three-items';
+import Footer from 'components/layout/footer';
+import { Suspense } from 'react';
+import ProductGrid from 'components/grid/product-grid';
 
-import Image from "next/image";
-import Link from "next/link";
-import type { Product } from 'lib/medusa/types';
-import { fetchProductsByDomain } from 'lib/fetchProductsByDomain';
+// export const runtime = 'edge';
 
-interface ProductGridProps {
-  subdomain: string;
-}
+// export const revalidate = 43200; // 12 hours
 
-export default async function ProductGrid({ params }: { params: { subdomain: string }}) {
-  const domainProducts = await fetchProductsByDomain(params.subdomain);
-  
+export const metadata = {
+  description: 'High-performance ecommerce store built with Next.js, Vercel, and Medusa.',
+  openGraph: {
+    type: 'website'
+  }
+};
+
+export default async function HomePage({ params }: { params: { subdomain: string }}) {
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      Subdomain products : {JSON.stringify(domainProducts, null, 2)}
-      Subdomain : {params.subdomain}
-      {domainProducts.map((product) => (
-        <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-          <Link href={`/product/${product.handle}`}>
-            <div className="relative h-48">
-              {product.thumbnail && (
-                <Image
-                  src={product.thumbnail}
-                  alt={product.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover"
-                />
-              )}
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold">{product.title}</h3>
-            </div>
-          </Link>
-        </div>
-      ))}
-    </div>
+    <>
+        <ProductGrid subdomain={params.subdomain} /> {/* Pass subdomain as a prop */}
+      <ThreeItemGrid />
+      {params.subdomain}
+      <Suspense>
+        <Carousel />
+        <Suspense>
+          <Footer />
+          {params.subdomain}
+        </Suspense>
+      </Suspense>
+    </>
   );
 }
