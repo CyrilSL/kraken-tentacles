@@ -1,7 +1,7 @@
 import OpengraphImage from 'components/opengraph-image';
 // import { getPage } from 'lib/medusa';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 export default async function Image({ params }: { params: { page: string } }) {
   // Medusa doesn't support content pages right now

@@ -4,7 +4,7 @@ import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
 import ProductGrid from 'components/grid/product-grid';
 
-// export const runtime = 'edge';
+// // export const runtime = 'edge';
 
 // export const revalidate = 43200; // 12 hours
 

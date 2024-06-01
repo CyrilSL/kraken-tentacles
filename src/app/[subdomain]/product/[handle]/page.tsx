@@ -11,7 +11,7 @@ import { getProduct } from 'lib/medusa';
 import { Image } from 'lib/medusa/types';
 import Link from 'next/link';
 
-export const runtime = 'edge';
+// export const runtime = 'edge';
 
 export async function generateMetadata({
   params
