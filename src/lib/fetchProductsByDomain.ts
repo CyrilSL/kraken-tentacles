@@ -3,7 +3,7 @@ import type { Product } from 'lib/medusa/types';
 export const fetchProductsByDomain = async (subdomain: string): Promise<Product[]> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/fetch_by_domain/?domain=test`
+      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/fetch_by_domain/?domain=${subdomain}`
     );
 
     if (!response.ok) {
