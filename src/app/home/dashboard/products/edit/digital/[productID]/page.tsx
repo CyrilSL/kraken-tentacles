@@ -6,7 +6,7 @@ import { useAdminUploadFile } from "medusa-react"
 import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, Upload } from "lucide-react"
-
+import { useAdminDeleteProduct } from "medusa-react"
 import {
   ProductProductCategoryReq,
   ProductSalesChannelReq,
@@ -146,6 +146,21 @@ export default function Page({ params }: { params: { productID: string } }) {
     }
   };
   
+  const deleteProduct = useAdminDeleteProduct(params.productID)
+
+const handleDeleteProduct = () => {
+  deleteProduct.mutate(undefined, {
+    onSuccess: ({ id, object, deleted }) => {
+      console.log(`Product with ID ${id} has been deleted.`)
+      // Optionally, you can perform additional actions after successful deletion, such as navigating to another page
+    },
+    onError: (error) => {
+      console.error('Error deleting product:', error)
+      // Optionally, you can display an error message to the user
+    },
+  })
+}
+
 
   const handleProductTitleUpdate = (updatedTitle: string, updatedDescription: string) => {
     if (formData) {
@@ -320,6 +335,17 @@ export default function Page({ params }: { params: { productID: string } }) {
                 </Card>
               </div>
             </div>
+            <Card x-chunk="dashboard-07-chunk-5">
+  <CardHeader>
+    <CardTitle>Archive Product</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <div></div>
+    <Button size="sm" variant="secondary" onClick={handleDeleteProduct}>
+      Delete Product
+    </Button>
+  </CardContent>
+</Card>
             <div className="flex items-center justify-center gap-2 md:hidden">
               <Button variant="outline" size="sm">
                 Discard
