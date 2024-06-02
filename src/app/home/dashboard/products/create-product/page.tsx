@@ -17,10 +17,10 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-import {
-  ProductProductCategoryReq,
-  ProductSalesChannelReq
-} from "@medusajs/medusa/dist/types/product"
+// import {
+//   ProductProductCategoryReq,
+//   ProductSalesChannelReq
+// } from "@medusajs/medusa/dist/types/product"
 
 import { useToast } from "@/components/ui/use-toast"
 import { useAdminUploadFile } from "medusa-react"
@@ -34,58 +34,95 @@ enum ProductStatus {
   REJECTED = "rejected",
 }
 
+//type ProductStatus = 'draft' | 'published'; // Define ProductStatus type
+
+type ProductSalesChannelReq = {
+  // Define the structure of ProductSalesChannelReq
+  id: string;
+  name: string;
+};
+
+type ProductProductCategoryReq = {
+  // Define the structure of ProductProductCategoryReq
+  id: string;
+  name: string;
+};
+
+
 type CreateProductData = {
-  title: string
-  is_giftcard: boolean
-  discountable: boolean
-  subtitle?: string
-  description?: string
-  images: string[]
-  thumbnail: string
-  handle: string
-  status: ProductStatus // You need to define ProductStatus type
-  tags: {
-    value: string
-  }[]
-  sales_channels: ProductSalesChannelReq[]
-  categories: ProductProductCategoryReq[]
+  title: string;
+  is_giftcard: boolean;
+  discountable: boolean;
+  subtitle?: string;
+  description?: string;
+  images: string[];
+  thumbnail: string;
+  handle: string;
+  status: ProductStatus;
+  tags: { value: string }[];
+  sales_channels: ProductSalesChannelReq[];
+  categories: ProductProductCategoryReq[];
+
+  options: {
+    title: string;
+  }[];
 
   variants: {
-    title:string
+    title: string;
     prices: {
-      amount: number
-      currency_code: string
-    }[]
-    
-  }[]
-}
+      amount: number;
+      currency_code: string;
+    }[];
+    options: {
+      value: string;
+    }[];
+  }[];
+};
+
+
 
 const initialFormData: CreateProductData = {
-  title: "",
+  title: "Sample Product",
   is_giftcard: false,
   discountable: true,
-  subtitle: "",
-  description: "",
-  images: [],
-  thumbnail: "",
-  handle: "",
-  status: ProductStatus.DRAFT,
+  subtitle: "Sample Subtitle",
+  description: "Sample Description",
+  images: [
+    "https://medusa-public-images.s3.eu-west-1.amazonaws.com/coffee-mug.png"
+  ],
+  thumbnail: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/coffee-mug.png",
+  handle: "sample-product",
+  status: ProductStatus.DRAFT, // Ensure this is correctly aligned with ProductStatus type
   tags: [],
   sales_channels: [],
   categories: [],
 
+  options: [
+    {
+      title: "Size"
+    }
+  ],
+
   variants: [
     {
-    title:"One",
+      title: "One",
       prices: [
         {
           amount: 108,
-          currency_code: "usd",
-        },
+          currency_code: "usd"
+        }
       ],
-    },
-  ],
-}
+      options: [
+        {
+          value: "One Size"
+        }
+      ]
+    }
+  ]
+};
+
+
+
 
 export default function AddProduct() {
   const { toast } = useToast()

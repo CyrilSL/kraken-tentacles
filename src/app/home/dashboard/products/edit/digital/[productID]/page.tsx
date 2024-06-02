@@ -7,6 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, Upload } from "lucide-react"
 import { useAdminDeleteProduct } from "medusa-react"
+
 import {
   ProductProductCategoryReq,
   ProductSalesChannelReq,
@@ -73,6 +74,10 @@ type CreateProductData = {
       amount: number
       currency_code: string
     }[]
+    options: {
+      value: string
+      option_id: string
+    }[]
   }[]
 }
 
@@ -111,6 +116,10 @@ export default function Page({ params }: { params: { productID: string } }) {
             amount: price.amount,
             currency_code: price.currency_code,
           })),
+          options: variant.options.map((option) => ({
+            value: option.value,
+            option_id: option.option_id // Include option_id here
+          })),
         })),
       })
     }
@@ -145,7 +154,8 @@ export default function Page({ params }: { params: { productID: string } }) {
       setFormData(updatedFormData);
     }
   };
-  
+
+   
   const deleteProduct = useAdminDeleteProduct(params.productID)
 
 const handleDeleteProduct = () => {
@@ -160,7 +170,7 @@ const handleDeleteProduct = () => {
     },
   })
 }
-
+  
 
   const handleProductTitleUpdate = (updatedTitle: string, updatedDescription: string) => {
     if (formData) {
@@ -223,13 +233,16 @@ const handleDeleteProduct = () => {
         thumbnail: formData?.thumbnail,
         images: formData?.images,
         status:formData?.status,
-        variants: [
-          {
-            title: "Digital",
-            inventory_quantity: 90,
-            prices: [{ amount: updatedPrice, currency_code: "usd" }],
-          },
-        ],
+        
+        variants: formData?.variants.map((variant) => ({
+          title: "Digital",
+          inventory_quantity: 90,
+          prices: [{ amount: updatedPrice, currency_code: "usd" }],
+          options: variant.options.map((option) => ({
+            value: option.value,
+            option_id: option.option_id,
+          })),
+        })),
       },
       {
         onSuccess: ({ product }) => {
