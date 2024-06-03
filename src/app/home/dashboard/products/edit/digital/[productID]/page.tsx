@@ -69,6 +69,7 @@ type CreateProductData = {
   categories: ProductProductCategoryReq[]
 
   variants: {
+    id: string
     title: string
     prices: {
       amount: number
@@ -111,6 +112,7 @@ export default function Page({ params }: { params: { productID: string } }) {
         sales_channels: product.sales_channels,
         categories: product.categories || [],
         variants: product.variants.map((variant) => ({
+          id : variant.id,
           title: variant.title,
           prices: variant.prices.map((price) => ({
             amount: price.amount,
@@ -234,15 +236,6 @@ const handleDeleteProduct = () => {
         images: formData?.images,
         status:formData?.status,
         
-        variants: formData?.variants.map((variant) => ({
-          title: "Digital",
-          inventory_quantity: 90,
-          prices: [{ amount: updatedPrice, currency_code: "usd" }],
-          options: variant.options.map((option) => ({
-            value: option.value,
-            option_id: option.option_id,
-          })),
-        })),
       },
       {
         onSuccess: ({ product }) => {
@@ -294,10 +287,14 @@ const handleDeleteProduct = () => {
       formData={formData}
       onUpdate={handleProductTitleUpdate}
     />
-                   <PriceCard
-      initialPrice={formData.variants[0]?.prices[0]?.amount || 0}
-      onPriceUpdate={handlePriceUpdate}
-    />
+  
+  {formData?.variants?.[0]?.id && (
+  <PriceCard
+    initialPrice={formData.variants[0].prices[0]?.amount || 0}
+    productId={params.productID}
+    variantId={formData.variants[0].id}
+  />
+)}
   
                 <UpdateDigitalMedia productId={params.productID} />
               </div>
@@ -368,6 +365,7 @@ const handleDeleteProduct = () => {
               </Button>
             </div>
           </div>
+          {JSON.stringify(product)}
         </main>
       </div>
     )

@@ -91,7 +91,7 @@ const initialFormData: CreateProductData = {
     "https://medusa-public-images.s3.eu-west-1.amazonaws.com/coffee-mug.png"
   ],
   thumbnail: "https://medusa-public-images.s3.eu-west-1.amazonaws.com/coffee-mug.png",
-  handle: "sample-product",
+  handle: "",
   status: ProductStatus.DRAFT, // Ensure this is correctly aligned with ProductStatus type
   tags: [],
   sales_channels: [],

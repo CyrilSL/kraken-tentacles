@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-
-import { Button } from "@/components/ui/button";
-
+import { useAdminUpdateVariant } from "medusa-react";
 import {
   Card,
   CardContent,
@@ -10,43 +8,67 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
 import { Input } from "@/components/ui/input";
-
 import { Label } from "@/components/ui/label";
-
 import {
   Table,
   TableBody,
   TableCell,
-  TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { PlusCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface PriceCardProps {
   initialPrice: number;
-  onPriceUpdate: (price: number) => void;
+  productId: string;
+  variantId: string;
 }
 
-const PriceCard: React.FC<PriceCardProps> = ({ initialPrice, onPriceUpdate }) => {
+const PriceCard: React.FC<PriceCardProps> = ({
+  initialPrice,
+  productId,
+  variantId,
+}) => {
   const [updatedPrice, setUpdatedPrice] = useState<number>(initialPrice || 0);
+  const updateVariant = useAdminUpdateVariant(productId);
 
   const handlePriceUpdate = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPrice = parseFloat(e.target.value);
     if (!isNaN(newPrice)) {
       setUpdatedPrice(newPrice);
-      onPriceUpdate(newPrice);
     }
+  };
+
+  const handleUpdatePrice = () => {
+    updateVariant.mutate(
+      {
+        variant_id: variantId,
+        prices: [
+          {
+            amount: updatedPrice,
+            currency_code: "usd", // Replace with the appropriate currency code
+          },
+        ],
+      },
+      {
+        onSuccess: ({ product }) => {
+          console.log("Price updated successfully:", product.variants);
+        },
+        onError: (error) => {
+          console.error("Error updating price:", error);
+        },
+      }
+    );
   };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Price</CardTitle>
-        <CardDescription>Lipsum dolor sit amet, consectetur adipiscing elit</CardDescription>
+        <CardDescription>
+          Update the price of the product variant
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -56,17 +78,19 @@ const PriceCard: React.FC<PriceCardProps> = ({ initialPrice, onPriceUpdate }) =>
                 <Label htmlFor="price-2" className="sr-only">
                   Price
                 </Label>
-                <Input id="price-2" value={updatedPrice.toString()} onChange={handlePriceUpdate} />
+                <Input
+                  id="price-2"
+                  value={updatedPrice.toString()}
+                  onChange={handlePriceUpdate}
+                />
               </TableCell>
             </TableRow>
-            <TableRow></TableRow>
           </TableBody>
         </Table>
       </CardContent>
       <CardFooter className="justify-center border-t p-4">
-        <Button size="sm" variant="ghost" className="gap-1">
-          <PlusCircle className="h-3.5 w-3.5" />
-          Add Variant
+        <Button size="sm" onClick={handleUpdatePrice}>
+          Set Price
         </Button>
       </CardFooter>
     </Card>
