@@ -86,69 +86,69 @@ export default async function medusaRequest({
   }
 }
 
-// const reshapeCart = (cart: MedusaCart): Cart => {
-//   try {
-//     const lines = cart?.items?.map((item) => reshapeLineItem(item)) || [];
-//     const totalQuantity = lines.reduce((a, b) => a + b.quantity, 0);
-//     const checkoutUrl = '/checkout'; // todo: implement medusa checkout flow
-//     const currencyCode = cart.region?.currency_code.toUpperCase() || 'USD';
+const reshapeCart = (cart: MedusaCart): Cart => {
+  try {
+    const lines = cart?.items?.map((item) => reshapeLineItem(item)) || [];
+    const totalQuantity = lines.reduce((a, b) => a + b.quantity, 0);
+    const checkoutUrl = '/checkout'; // todo: implement medusa checkout flow
+    const currencyCode = cart.region?.currency_code.toUpperCase() || 'USD';
 
-//     let subtotalAmount = '0';
-//     if (cart.subtotal && cart.region) {
-//       subtotalAmount = computeAmount({ amount: cart.subtotal, region: cart.region }).toString();
-//     } else {
-//       throw new Error('Missing subtotal or region information in the cart');
-//     }
+    let subtotalAmount = '0';
+    if (cart.subtotal && cart.region) {
+      subtotalAmount = computeAmount({ amount: cart.subtotal, region: cart.region }).toString();
+    } else {
+      throw new Error('Missing subtotal or region information in the cart');
+    }
 
-//     let totalAmount = '0';
-//     if (cart.total && cart.region) {
-//       totalAmount = computeAmount({ amount: cart.total, region: cart.region }).toString();
-//     } else {
-//       throw new Error('Missing total or region information in the cart');
-//     }
+    let totalAmount = '0';
+    if (cart.total && cart.region) {
+      totalAmount = computeAmount({ amount: cart.total, region: cart.region }).toString();
+    } else {
+      throw new Error('Missing total or region information in the cart');
+    }
 
-//     let totalTaxAmount = '0';
-// if (cart.tax_total && cart.region) {
-//   totalTaxAmount = computeAmount({ amount: cart.tax_total, region: cart.region }).toString();
-// } else if (!cart.tax_total) {
-//   // Handle the case where tax_total is falsy (e.g., 0, null, undefined)
-//   totalTaxAmount = '0';
-// } else {
-//   throw new Error('Missing region information in the cart');
-// }
+    let totalTaxAmount = '0';
+if (cart.tax_total && cart.region) {
+  totalTaxAmount = computeAmount({ amount: cart.tax_total, region: cart.region }).toString();
+} else if (!cart.tax_total) {
+  // Handle the case where tax_total is falsy (e.g., 0, null, undefined)
+  totalTaxAmount = '0';
+} else {
+  throw new Error('Missing region information in the cart');
+}
 
-//     const cost = {
-//       subtotalAmount: {
-//         amount: subtotalAmount,
-//         currencyCode: currencyCode
-//       },
-//       totalAmount: {
-//         amount: totalAmount,
-//         currencyCode: currencyCode
-//       },
-//       totalTaxAmount: {
-//         amount: totalTaxAmount,
-//         currencyCode: currencyCode
-//       }
-//     };
+    const cost = {
+      subtotalAmount: {
+        amount: subtotalAmount,
+        currencyCode: currencyCode
+      },
+      totalAmount: {
+        amount: totalAmount,
+        currencyCode: currencyCode
+      },
+      totalTaxAmount: {
+        amount: totalTaxAmount,
+        currencyCode: currencyCode
+      }
+    };
 
-//     return {
-//       ...cart,
-//       totalQuantity,
-//       checkoutUrl,
-//       lines,
-//       cost
-//     };
-//   } catch (error) {
-//     if (error instanceof Error) {
-//       console.error(`Error: ${error.message}`);
-//     } else {
-//       console.error('An unexpected error occurred.');
-//     }
+    return {
+      ...cart,
+      totalQuantity,
+      checkoutUrl,
+      lines,
+      cost
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(`Error: ${error.message}`);
+    } else {
+      console.error('An unexpected error occurred.');
+    }
 
-//     throw error; // Re-throw the error for further handling
-//   }
-// };
+    throw error; // Re-throw the error for further handling
+  }
+};
 
 const reshapeLineItem = (lineItem: MedusaLineItem): CartItem => {
   const product = {
@@ -321,11 +321,11 @@ const reshapeCategory = (category: ProductCategory): ProductCollection => {
   };
 };
 
-// export async function createCart(): Promise<Cart> {
-//   const res = await medusaRequest({ method: 'POST', path: '/carts' });
-//   console.log("Create cart : ", reshapeCart(res.body.cart))
-//   return reshapeCart(res.body.cart);
-// }
+export async function createCart(): Promise<Cart> {
+  const res = await medusaRequest({ method: 'POST', path: '/carts' });
+  console.log("Create cart : ", reshapeCart(res.body.cart))
+  return reshapeCart(res.body.cart);
+}
 
 export async function addToCart(
   cartId: string,

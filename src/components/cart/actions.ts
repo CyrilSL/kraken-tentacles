@@ -1,6 +1,8 @@
 'use server';
 
 import { addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/medusa';
+//import { addToCart, getCart, removeFromCart, updateCart } from 'lib/medusa';
+
 import { cookies } from 'next/headers';
 
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
