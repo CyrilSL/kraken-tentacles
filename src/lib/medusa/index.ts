@@ -29,7 +29,7 @@ const ENDPOINT = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL ?? 'http://localhost
 const MEDUSA_API_KEY = process.env.MEDUSA_API_KEY ?? '';
 
 export default async function medusaRequest({
-  cache = 'force-cache',
+  cache = 'no-cache',
   method,
   path,
   payload,
