@@ -14,7 +14,8 @@ export default async function Cart() {
   // (old carts becomes `null` when you checkout), then get a new `cartId`
   //  and re-fetch the cart.
   if (!cartId || !cart) {
-    cart = await createCart();
+   // cart = await createCart();
+   console.log("Creting cart Here!")
   }
 
   return <CartModal cart={cart} />;

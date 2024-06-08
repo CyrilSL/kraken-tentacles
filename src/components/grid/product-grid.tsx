@@ -4,7 +4,7 @@ import { fetchProductsByID } from 'lib/fetchProductsByID';
 import { fetchStoreDetailsByDomain } from 'lib/fetchStoreDetailsByDomain';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Product } from 'lib/medusa/types';
+// import type { Product } from 'lib/medusa/types';
 
 interface ProductGridProps {
   subdomain: string;
