@@ -14,6 +14,7 @@ export default async function Navbar() {
 
   return (
     <nav className="relative flex items-center justify-between p-4 lg:px-6">
+      CS
       <div className="block flex-none md:hidden">
         <MobileMenu menu={menu} />
       </div>
