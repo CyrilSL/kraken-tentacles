@@ -4,6 +4,7 @@ import { fetchProductsByID } from 'lib/fetchProductsByID';
 import { fetchStoreDetailsByDomain } from 'lib/fetchStoreDetailsByDomain';
 import Image from 'next/image';
 import Link from 'next/link';
+
 // import type { Product } from 'lib/medusa/types';
 
 interface ProductGridProps {
@@ -13,6 +14,11 @@ interface ProductGridProps {
 const ProductGrid = async ({ subdomain }: ProductGridProps) => {
   try {
     const storeDetails = await fetchStoreDetailsByDomain(subdomain);
+
+    if (!storeDetails?.store?.id) {
+      return <p>Store details not found.</p>;
+    }
+
     const products = await fetchProductsByID(storeDetails.store.id, { cache: 'no-store' });
 
     if (!products || products.length === 0) {
@@ -22,10 +28,7 @@ const ProductGrid = async ({ subdomain }: ProductGridProps) => {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {products.map((product) => (
-          <div
-            key={product.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
-          >
+          <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
             <Link href={`/product/${product.handle}`}>
               <div className="relative h-48">
                 {product.thumbnail && (
