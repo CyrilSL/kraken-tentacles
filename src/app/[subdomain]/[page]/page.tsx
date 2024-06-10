@@ -1,53 +1,75 @@
-import type { Metadata } from 'next';
+import React from 'react';
+import { cookies } from 'next/headers';
 
-import Prose from 'components/prose';
-import { CHECKOUT_PAGE_PROPS } from 'lib/constants';
-import { notFound } from 'next/navigation';
+const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000'; // Replace with your actual backend URL
 
-// export const runtime = 'edge';
+interface PaymentProvider {
+  provider_id: string;
+  status: string;
+  // Add other properties as needed
+}
 
-export const revalidate = 43200; // 12 hours
-
-export async function generateMetadata({
-  params
-}: {
-  params: { page: string };
-}): Promise<Metadata> {
-  let page;
-
-  params.page === 'checkout' && (page = CHECKOUT_PAGE_PROPS);
-
-  if (!page) return notFound();
-
-  return {
-    title: page.title,
-    description: '',
-    openGraph: {
-      publishedTime: page.createdAt,
-      modifiedTime: page.updatedAt,
-      type: 'article'
-    }
+interface CartResponse {
+  cart: {
+    payment_sessions: PaymentProvider[];
   };
 }
 
-export default async function Page({ params }: { params: { page: string } }) {
-  let page;
+async function fetchPaymentProviders(cartId: string): Promise<PaymentProvider[]> {
+  const response = await fetch(`${BACKEND_URL}/store/carts/${cartId}/payment-sessions`, {
+    method: "POST",
+    credentials: "include",
+    cache: 'no-store', // Disable caching for this request
+  });
 
-  params.page === 'checkout' && (page = CHECKOUT_PAGE_PROPS);
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
 
-  if (!page) return notFound();
+  const { cart } = await response.json() as CartResponse;
+  return cart.payment_sessions;
+}
+
+export default async function CheckoutPage() {
+  const cartId = cookies().get('cartId')?.value;
+
+  if (!cartId) {
+    return <div>Error: No cart ID found</div>;
+  }
+
+  let paymentProviders: PaymentProvider[] = [];
+  let error: string | null = null;
+
+  try {
+    paymentProviders = await fetchPaymentProviders(cartId);
+  } catch (e) {
+    console.error("Failed to fetch payment providers:", e);
+    error = e instanceof Error ? e.message : 'An unknown error occurred';
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
   return (
-    <>
-      <h1 className="mb-8 text-5xl font-bold">{page.title}</h1>
-      <Prose className="mb-8" html={page.body as string} />
-      <p className="text-sm italic">
-        {`This document was last updated on ${new Intl.DateTimeFormat(undefined, {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        }).format(new Date(page.updatedAt))}.`}
-      </p>
-    </>
+    <div>
+      <h1>Checkout</h1>
+      <p>Cart ID: {cartId}</p>
+      
+      <h2>Available Payment Providers:</h2>
+      {paymentProviders.length > 0 ? (
+        <ul>
+          {paymentProviders.map((provider, index) => (
+            <li key={index}>
+              <strong>{provider.provider_id}</strong>
+              <p>Status: {provider.status}</p>
+              {/* Add more provider details as needed */}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No payment providers available.</p>
+      )}
+    </div>
   );
 }
