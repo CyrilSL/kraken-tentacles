@@ -1,12 +1,16 @@
+// CheckoutPage.tsx
 import React from 'react';
 import { cookies } from 'next/headers';
+import ClientCheckout from './ClientCheckout';
+import { Elements } from '@stripe/react-stripe-js';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000'; // Replace with your actual backend URL
+
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000';
 
 interface PaymentProvider {
   provider_id: string;
   status: string;
-  // Add other properties as needed
 }
 
 interface CartResponse {
@@ -17,9 +21,9 @@ interface CartResponse {
 
 async function fetchPaymentProviders(cartId: string): Promise<PaymentProvider[]> {
   const response = await fetch(`${BACKEND_URL}/store/carts/${cartId}/payment-sessions`, {
-    method: "POST",
-    credentials: "include",
-    cache: 'no-store', // Disable caching for this request
+    method: 'POST',
+    credentials: 'include',
+    cache: 'no-store',
   });
 
   if (!response.ok) {
@@ -43,33 +47,15 @@ export default async function CheckoutPage() {
   try {
     paymentProviders = await fetchPaymentProviders(cartId);
   } catch (e) {
-    console.error("Failed to fetch payment providers:", e);
+    console.error('Failed to fetch payment providers:', e);
     error = e instanceof Error ? e.message : 'An unknown error occurred';
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
-    <div>
-      <h1>Checkout</h1>
-      <p>Cart ID: {cartId}</p>
-      
-      <h2>Available Payment Providers:</h2>
-      {paymentProviders.length > 0 ? (
-        <ul>
-          {paymentProviders.map((provider, index) => (
-            <li key={index}>
-              <strong>{provider.provider_id}</strong>
-              <p>Status: {provider.status}</p>
-              {/* Add more provider details as needed */}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No payment providers available.</p>
-      )}
-    </div>
+    <ClientCheckout
+      cartId={cartId}
+      paymentProviders={paymentProviders}
+      error={error}
+    />
   );
 }

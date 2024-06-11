@@ -16,7 +16,6 @@ export async function middleware(req: NextRequest) {
 
   const host = req.headers.get('host');
   const subdomain = getValidSubdomain(host);
-  console.log("GVSD :", subdomain);
 
   if (subdomain) {
     // Subdomain available, rewriting
