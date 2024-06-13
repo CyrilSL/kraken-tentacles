@@ -62,11 +62,12 @@ const StripeCheckout: React.FC<{ cartId: string }> = ({ cartId }) => {
           card: cardElement,
           billing_details: {
             email: 'customer@example.com',
-     
+            name:"Kraken",
             address: {
-              
-              country: 'us',
-          
+              city : "Example", 
+              country : "us",
+              line1 : "Line 1 Address",
+              postal_code : "888888",
             },
           },
         },
