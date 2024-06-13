@@ -2,7 +2,7 @@
 import React from 'react';
 import { cookies } from 'next/headers';
 import ClientCheckout from './stripe/ClientCheckout';
-import { Elements } from '@stripe/react-stripe-js';
+//import { Elements } from '@stripe/react-stripe-js';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL || 'http://localhost:9000';
 

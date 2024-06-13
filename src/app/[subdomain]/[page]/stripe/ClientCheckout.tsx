@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 // Ensure the Stripe public key is correctly set
 const STRIPE_PUBLIC_KEY = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "pk_test_51OyTzlSEZaK92Ulodkozht1cMui36WK2Rq2aIoQDbHjS3732ZBBwU8DCcQ781YWs1IjVoFBTfhpmdrMsw2pGZPSa00aoe2sSCo";
@@ -43,38 +43,38 @@ async function createStripePaymentSession(cartId: string): Promise<string> {
   return client_secret;
 }
 
-const StripeCheckout: React.FC<{ cartId: string }> = ({ cartId }) => {
+const StripeCheckout: React.FC<{ cartId: string; clientSecret: string }> = ({ cartId, clientSecret }) => {
   const [errorState, setError] = useState<string | null>(null);
   const stripe = useStripe();
   const elements = useElements();
 
   const handleStripeCheckout = async () => {
     try {
-      const clientSecret = await createStripePaymentSession(cartId);
-      const cardElement = elements?.getElement(CardElement);
-      
-      if (!stripe || !cardElement) {
+      if (!stripe || !elements) {
         throw new Error('Stripe has not loaded properly.');
       }
 
-      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            email: 'customer@example.com',
-            name:"Kraken",
-            address: {
-              city : "Example", 
-              country : "us",
-              line1 : "Line 1 Address",
-              postal_code : "888888",
+      const { error } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: 'https://google.com',
+          payment_method_data: {
+            billing_details: {
+              name: 'John Doe', // Replace with the desired name
+              address: {
+                line1: '123 Main St', // Replace with the desired address
+                city: 'Anytown',
+                state: 'CA',
+                postal_code: '12345',
+                country: 'US',
+              },
             },
           },
         },
       });
 
-      if (stripeError) {
-        setError(stripeError.message || 'An error occurred during payment');        
+      if (error) {
+        setError(error.message);
         return;
       }
 
@@ -87,7 +87,7 @@ const StripeCheckout: React.FC<{ cartId: string }> = ({ cartId }) => {
         throw new Error('Failed to complete the cart');
       }
 
-      console.log('Payment successful:', paymentIntent);
+      console.log('Payment successful');
     } catch (e) {
       console.error('Payment failed:', e);
       setError(e instanceof Error ? e.message : 'An unknown error occurred');
@@ -100,7 +100,7 @@ const StripeCheckout: React.FC<{ cartId: string }> = ({ cartId }) => {
 
   return (
     <div>
-      <CardElement />
+      <PaymentElement />
       <button onClick={handleStripeCheckout}>Pay with Stripe</button>
     </div>
   );
@@ -108,15 +108,28 @@ const StripeCheckout: React.FC<{ cartId: string }> = ({ cartId }) => {
 
 const ClientCheckout: React.FC<ClientCheckoutProps> = ({ cartId, paymentProviders, error }) => {
   const [errorState, setError] = useState<string | null>(error);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
 
   useEffect(() => {
     if (error) {
       setError(error);
     }
-  }, [error]);
 
-  return (
-    <Elements stripe={loadStripe(STRIPE_PUBLIC_KEY)}>
+    const fetchClientSecret = async () => {
+      try {
+        const secret = await createStripePaymentSession(cartId);
+        setClientSecret(secret);
+      } catch (e) {
+        console.error('Failed to fetch client secret:', e);
+        setError(e instanceof Error ? e.message : 'An unknown error occurred');
+      }
+    };
+
+    fetchClientSecret();
+  }, [cartId, error]);
+
+  return clientSecret ? (
+    <Elements stripe={loadStripe(STRIPE_PUBLIC_KEY)} options={{ clientSecret }}>
       <h1>Checkout</h1>
       <p>Cart ID: {cartId}</p>
       <h2>Available Payment Providers:</h2>
@@ -127,7 +140,7 @@ const ClientCheckout: React.FC<ClientCheckoutProps> = ({ cartId, paymentProvider
               <strong>{provider.provider_id}</strong>
               <br />
               Status: {provider.status}
-              {provider.provider_id === 'stripe' && <StripeCheckout cartId={cartId} />}
+              {provider.provider_id === 'stripe' && <StripeCheckout cartId={cartId} clientSecret={clientSecret} />}
             </li>
           ))}
         </ul>
@@ -135,6 +148,8 @@ const ClientCheckout: React.FC<ClientCheckoutProps> = ({ cartId, paymentProvider
         <p>No payment providers available.</p>
       )}
     </Elements>
+  ) : (
+    <div>Loading...</div>
   );
 };
 
