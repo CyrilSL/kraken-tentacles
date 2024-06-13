@@ -74,7 +74,7 @@ const StripeCheckout: React.FC<{ cartId: string; clientSecret: string }> = ({ ca
       });
 
       if (error) {
-        setError(error.message);
+        setError(error.message ?? 'An error occurred');
         return;
       }
 
