@@ -1,11 +1,8 @@
 // app/product-grid/page.tsx
-
 import { fetchProductsByID } from 'lib/fetchProductsByID';
 import { fetchStoreDetailsByDomain } from 'lib/fetchStoreDetailsByDomain';
 import Image from 'next/image';
 import Link from 'next/link';
-
-// import type { Product } from 'lib/medusa/types';
 
 interface ProductGridProps {
   subdomain: string;
@@ -14,40 +11,40 @@ interface ProductGridProps {
 const ProductGrid = async ({ subdomain }: ProductGridProps) => {
   try {
     const storeDetails = await fetchStoreDetailsByDomain(subdomain);
-
     if (!storeDetails?.store?.id) {
       return <p>Store details not found.</p>;
     }
 
     const products = await fetchProductsByID(storeDetails.store.id, { cache: 'no-store' });
-
     if (!products || products.length === 0) {
       return <p>No products found.</p>;
     }
 
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <section className="grid grid-cols-1 md:grid-cols-3 gap-6 px-4 md:px-6 max-w-6xl mx-auto">
         {products.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <Link href={`/product/${product.handle}`}>
-              <div className="relative h-48">
-                {product.thumbnail && (
-                  <Image
-                    src={product.thumbnail}
-                    alt={product.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover"
-                  />
-                )}
-              </div>
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">{product.title}</h3>
-              </div>
+          <div
+            key={product.id}
+            className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2"
+          >
+            <Link href={`/product/${product.handle}`} className="absolute inset-0 z-10" prefetch={false}>
+              <span className="sr-only">View</span>
             </Link>
+            {product.thumbnail && (
+              <Image
+                src={product.thumbnail}
+                alt={product.title}
+                width={500}
+                height={500}
+                className="object-cover w-full aspect-square"
+              />
+            )}
+            <div className="bg-white p-4 dark:bg-gray-950">
+              <h3 className="font-bold text-xl">{product.title}</h3>
+            </div>
           </div>
         ))}
-      </div>
+      </section>
     );
   } catch (error) {
     console.error('Failed to load products:', error);

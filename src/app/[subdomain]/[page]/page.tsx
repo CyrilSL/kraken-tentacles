@@ -1,7 +1,7 @@
 // CheckoutPage.tsx
 import React from 'react';
 import { cookies } from 'next/headers';
-import ClientCheckout from './ClientCheckout';
+import ClientCheckout from './stripe/ClientCheckout';
 import { Elements } from '@stripe/react-stripe-js';
 
 
