@@ -365,7 +365,7 @@ const handleDeleteProduct = () => {
               </Button>
             </div>
           </div>
-          {JSON.stringify(product)}
+          {/* {JSON.stringify(product)} */}
         </main>
       </div>
     )
