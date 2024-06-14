@@ -1,9 +1,12 @@
-import type { Product } from 'lib/medusa/types';
 
-export const fetchStoreDetailsByDomain = async (subdomain: string) => {
+export const fetchStoreDetailsByDomain = async (subdomain: string, options?: RequestInit) => {
+  console.log("Store : ",`${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/store_by_domain/?domain=${subdomain}`)
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/store_by_domain/?domain=${subdomain}`
+      `${process.env.NEXT_PUBLIC_MEDUSA_BACKEND_URL}/store/store_by_domain/?domain=${subdomain}`,
+      {
+        ...options,
+      }
     );
 
     if (!response.ok) {
