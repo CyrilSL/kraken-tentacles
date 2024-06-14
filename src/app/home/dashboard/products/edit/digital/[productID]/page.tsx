@@ -39,7 +39,6 @@ import {
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import ProductImageUpload from "./components/ProductImage"
-import ProductPriceVariant from "./components/ProductPriceVariant"
 
 import PriceCard from "./components/PriceCard"
 import UpdateDigitalMedia from "./components/ProductDigitalUpload"
@@ -71,6 +70,7 @@ type CreateProductData = {
   variants: {
     id: string
     title: string
+    
     prices: {
       amount: number
       currency_code: string
