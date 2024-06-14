@@ -44,6 +44,7 @@ const PriceCard: React.FC<PriceCardProps> = ({
     updateVariant.mutate(
       {
         variant_id: variantId,
+        allow_backorder:true,
         prices: [
           {
             amount: updatedPrice,

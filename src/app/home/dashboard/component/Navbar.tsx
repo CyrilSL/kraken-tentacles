@@ -39,10 +39,10 @@ export const Navbar = () => {
           Customers
         </Link>
         <Link
-          href="#"
+          href="/dashboard/settings"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Analytics
+          Settings
         </Link>
       </nav>
       <Sheet>
@@ -83,10 +83,10 @@ export const Navbar = () => {
               Customers
             </Link>
             <Link
-              href="#"
+              href="/settings"
               className="text-muted-foreground hover:text-foreground"
             >
-              Analytics
+              Settings
             </Link>
           </nav>
         </SheetContent>
