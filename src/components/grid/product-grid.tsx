@@ -10,7 +10,7 @@ interface ProductGridProps {
 
 const ProductGrid = async ({ subdomain }: ProductGridProps) => {
   try {
-    const storeDetails = await fetchStoreDetailsByDomain(subdomain);
+    const storeDetails = await fetchStoreDetailsByDomain(subdomain, { cache: 'no-store' });
     if (!storeDetails?.store?.id) {
       return <p>Store details not found.</p>;
     }
