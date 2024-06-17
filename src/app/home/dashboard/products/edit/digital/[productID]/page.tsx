@@ -296,8 +296,15 @@ const handleDeleteProduct = () => {
   />
 )}
   
-                <UpdateDigitalMedia productId={params.productID} />
-              </div>
+  {formData?.variants?.[0]?.id && (
+              <UpdateDigitalMedia
+                productId={params.productID}
+                variantId={formData.variants[0].id}
+              />
+            )}              
+            
+            
+            </div>
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                 <Card x-chunk="dashboard-07-chunk-3">
                   <CardHeader>
@@ -365,7 +372,7 @@ const handleDeleteProduct = () => {
               </Button>
             </div>
           </div>
-          {/* {JSON.stringify(product)} */}
+          {JSON.stringify(product)}
         </main>
       </div>
     )
