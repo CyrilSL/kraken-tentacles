@@ -49,7 +49,7 @@ export default async function CheckoutPage() {
     return <div>Error: No cart ID found</div>;
   }
 
-  const email = 'user@example.com'; // Replace with the desired email address
+  const email = 'itheonlycyril@gmail.com'; // Replace with the desired email address
 
   let paymentProviders: PaymentProvider[] = [];
   let error: string | null = null;

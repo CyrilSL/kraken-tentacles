@@ -94,6 +94,7 @@ export default async function ProductPage({ params }: { params: { handle: string
           <div className="basis-full lg:basis-2/6">
             <ProductDescription product={product} />
           </div>
+          {/* {JSON.stringify(product)} */}
         </div>
         <Suspense>
           <RelatedProducts id={product.id!} />
