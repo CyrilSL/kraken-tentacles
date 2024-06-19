@@ -99,7 +99,6 @@ const reshapeCart = (cart: MedusaCart): Cart => {
     const totalQuantity = lines.reduce((a, b) => a + b.quantity, 0);
     const checkoutUrl = '/checkout'; // todo: implement medusa checkout flow
     const currencyCode = cart.region?.currency_code?.toUpperCase() || 'USD';
-
     if (!cart.region) {
       throw new CartError('Missing region information in the cart');
     }
@@ -391,7 +390,7 @@ export async function updateCart(
 export async function getCart(cartId: string): Promise<Cart | null> {
   const res = await medusaRequest({ method: 'GET', path: `/carts/${cartId}`, tags: ['cart'] });
   const cart = res.body.cart;
-
+  
   if (!cart) {
     return null;
   }
