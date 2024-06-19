@@ -32,5 +32,10 @@ module.exports = {
               hostname: "stnndvuzdvuokauwugrs.supabase.co",
             },
     ]
+  },
+  logging:{
+    fetches:{
+      fullUrl:true,
+    }
   }
 };

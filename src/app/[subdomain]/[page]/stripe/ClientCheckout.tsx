@@ -73,10 +73,10 @@ const StripeCheckout: React.FC<{ cartId: string; clientSecret: string }> = ({ ca
         },
       });
 
-      if (error) {
-        setError(error.message);
-        return;
-      }
+      // if (error) {
+      //   setError(error.message);
+      //   return;
+      // }
 
       // Payment was successful, complete the cart in Medusa
       const completeResponse = await fetch(`${BACKEND_URL}/store/carts/${cartId}/complete`, {
