@@ -10,14 +10,14 @@ interface ProductGridProps {
 
 const ProductGrid = async ({ subdomain }: ProductGridProps) => {
   try {
-    const storeDetails = await fetchStoreDetailsByDomain(subdomain);
+    const storeDetails = await fetchStoreDetailsByDomain(subdomain, { cache: 'no-store' });
     if (!storeDetails?.store?.id) {
       return <p>Store details not found.</p>;
     }
 
     const products = await fetchProductsByID(storeDetails.store.id, { cache: 'no-store' });
     if (!products || products.length === 0) {
-      return <p>No products found.</p>;
+      return <p>No products found...</p>;
     }
 
     return (
