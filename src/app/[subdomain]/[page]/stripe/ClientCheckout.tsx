@@ -71,6 +71,7 @@ const StripeCheckout: React.FC<{ cartId: string; clientSecret: string }> = ({ ca
             },
           },
         },
+        redirect : 'if_required' 
       });
 
       // if (error) {
