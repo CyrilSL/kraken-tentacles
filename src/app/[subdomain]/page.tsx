@@ -5,7 +5,7 @@ import ProductGrid from 'components/grid/product-grid';
 // export const revalidate = 43200; // 12 hours
 
 export const metadata = {
-  description: 'High-performance ecommerce store built with Next.js, Vercel, and Medusa.',
+  description: 'your store',
   openGraph: {
     type: 'website'
   }

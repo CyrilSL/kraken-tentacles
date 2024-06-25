@@ -1,9 +1,7 @@
 {
   "private": true,
-  "packageManager": "pnpm@8.2.0",
   "engines": {
-    "node": ">=18",
-    "pnpm": ">=7"
+    "node": ">=18"
   },
   "scripts": {
     "dev": "next dev -p 8000",
@@ -38,6 +36,7 @@
     "posthog-js": "^1.136.2",
     "react": "latest",
     "react-dom": "latest",
+    "sharp": "^0.33.4",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-radix": "^3.0.3"

@@ -23,6 +23,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[subdomain]/error.tsx.bkp", "src/app/[subdomain]/error.tsx.bkp", "src/app/[subdomain]/error.tsx.bkp", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/[subdomain]/error.tsx", "src/app/[subdomain]/error.tsx", "src/app/[subdomain]/error.tsx", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js", "src/app/[subdomain]/[page]/stripe/ClientCheckout.js"],
   "exclude": ["node_modules"]
 }
